@@ -25,8 +25,14 @@ namespace drivetrainConstants {
     constexpr int motorFrontLeft = 2;
     constexpr int motorRearLeft = 3;
 
-    constexpr double motorMaxOutput = 0.5;
-    constexpr double motorDeadband = 0.1;
+    constexpr double motorMaxOutput = 1;
+    constexpr double motorDeadband = 0.05;
+
+    constexpr double driveScalingCoefficient = 0.8;
+
+    constexpr double xRateLimit = 1;
+    constexpr double yRateLimit = 1;
+    constexpr double zRateLimit = 1;
 
 }
 
@@ -53,6 +59,10 @@ namespace indexerConstants {
 
     constexpr double motorMaxOutput = 0.5;
 
+    constexpr bool indexerInverted = false;
+    constexpr bool satVoltage = true;
+    constexpr bool voltageComp = true;
+
 }
 
 namespace shooterConstants {
@@ -61,6 +71,21 @@ namespace shooterConstants {
     constexpr int motorShooter = 7;
 
     constexpr double motorMaxOutput = 0.5;
+
+    constexpr double shooterkP = 0;
+    constexpr double shooterkI = 0;
+    constexpr double shooterkD = 0;
+    constexpr double shooterFF = 0;
+
+    constexpr double maxDistanceFromTarget = 0;
+    constexpr double minDistanceFromTarget = 0;
+    constexpr double maxAimDeviation = 0;
+
+    constexpr double targetHeightMeters = 0;
+    constexpr double limelightHeightMeters = 0;
+    constexpr double limelightAngleDEG = 0;
+
+
 
 }
 

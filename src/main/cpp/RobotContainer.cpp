@@ -13,9 +13,9 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controllerMain.GetX(); },
-    [this] { return m_controllerMain.GetY(); },
-    [this] { return m_controllerMain.GetZ(); }));
+    [this] { return m_controllerMain.GetLeftX(); },
+    [this] { return m_controllerMain.GetLeftY(); },
+    [this] { return m_controllerMain.GetRightX(); }));
 
   m_harvester.SetDefaultCommand(Harvester(
     &m_harvester, harvester::HarvesterDirection::kOff
@@ -32,12 +32,20 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
-  frc2::JoystickButton(&m_controllerMain, 1).WhenPressed(
-    ShootHigh(&m_shooter));
 
-  (frc2::JoystickButton(&m_controllerMain, 1)
-    && frc2::JoystickButton(&m_controllerMain, 2)).WhenActive(
-      ShootLow(&m_shooter));
+  frc2::JoystickButton(&m_controllerAux, 1).WhenActive(
+    Harvester(&m_harvester, harvester::HarvesterDirection::kForward));
+
+  frc2::JoystickButton(&m_controllerAux, 2).WhenActive(
+    Harvester(&m_harvester, harvester::HarvesterDirection::kReverse));
+
+  if (m_controllerAux.GetRightTriggerAxis() >= 0.75) {
+    frc2::Trigger().WhenActive(ShootHigh(&m_shooter));
+  }
+  
+  if (m_controllerAux.GetLeftTriggerAxis() >= 0.75) {
+    frc2::Trigger().WhenActive(ShootLow(&m_shooter));
+  }
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

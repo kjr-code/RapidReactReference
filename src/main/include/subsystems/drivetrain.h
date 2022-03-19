@@ -5,6 +5,8 @@
 #include <AHRS.h>
 #include <ctre/phoenix.h>
 #include <frc/drive/MecanumDrive.h>
+#include <frc/filter/SlewRateLimiter.h>
+#include <math.h>
 
 #include "Constants.h"
 
@@ -23,7 +25,11 @@ class drivetrain : public frc2::SubsystemBase {
    * @param ySpeed The y-speed of the robot (relative to the driver).
    * @param zRotation The z-rotation of the robot (about its center).
    */
-  void BootlegSwerve(double xSpeed, double ySpeed, double zRotation);
+  void MecanumDriveJoystick(double xSpeed, double ySpeed, double zRotation, bool fieldOriented);
+
+  void MecanumDrive(double x, double y, double z);
+
+  void NormalizeWheelSpeeds(double FL, double BL, double FR, double BR);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -48,6 +54,10 @@ class drivetrain : public frc2::SubsystemBase {
   TalonFXConfiguration m_talonFXConfiguration{};
 
   frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
+
+  frc::SlewRateLimiter xRateLimiter{xRateLimit};
+  frc::SlewRateLimiter yRateLimiter{yRateLimit};
+  frc::SlewRateLimiter zRateLimiter{zRateLimit};
 
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};

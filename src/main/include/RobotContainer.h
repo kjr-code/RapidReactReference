@@ -21,6 +21,7 @@
 #include "subsystems/indexer.h"
 
 #include <frc/Joystick.h>
+#include <frc/XboxController.h>
 
 using namespace controllerConstants;
 
@@ -49,5 +50,6 @@ class RobotContainer {
 
   void ConfigureButtonBindings();
 
-  frc::Joystick m_controllerMain{controllerMain};
+  frc::XboxController m_controllerMain{controllerMain};
+  frc::XboxController m_controllerAux{controllerAux};
 };

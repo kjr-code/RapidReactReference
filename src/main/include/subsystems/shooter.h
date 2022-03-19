@@ -16,6 +16,8 @@ class shooter : public frc2::SubsystemBase {
    */
   int Goldilocks();
 
+
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -29,4 +31,5 @@ class shooter : public frc2::SubsystemBase {
 
  private:
   rev::CANSparkMax m_motorShooter{shooterConstants::motorShooter, rev::CANSparkMax::MotorType::kBrushless};
+  rev::SparkMaxPIDController m_PIDShooter{m_motorShooter.GetPIDController()};
 };

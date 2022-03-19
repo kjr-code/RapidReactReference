@@ -2,7 +2,9 @@
 
 indexer::indexer() {
   // Implementation of subsystem constructor goes here.
-  m_motorIndexer.ConfigFactoryDefault();
+  m_motorIndexer.SetInverted(indexerConstants::indexerInverted);
+  m_motorIndexer.ConfigVoltageCompSaturation(indexerConstants::satVoltage);
+  m_motorIndexer.EnableVoltageCompensation(indexerConstants::voltageComp);
 }
 
 void indexer::RunIndexer(const IndexerDirection& direction) {
