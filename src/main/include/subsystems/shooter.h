@@ -2,8 +2,13 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableEntry.h> 
+#include <networktables/NetworkTableInstance.h>
 
 #include "Constants.h"
+
+using namespace shooterConstants;
 
 class shooter : public frc2::SubsystemBase {
  public:
@@ -32,4 +37,6 @@ class shooter : public frc2::SubsystemBase {
  private:
   rev::CANSparkMax m_motorShooter{shooterConstants::motorShooter, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxPIDController m_PIDShooter{m_motorShooter.GetPIDController()};
+  nt::NetworkTable m_table;
+  nt::NetworkTableEntry m_x, m_y;
 };

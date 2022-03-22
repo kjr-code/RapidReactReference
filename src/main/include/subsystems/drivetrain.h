@@ -18,18 +18,26 @@ class drivetrain : public frc2::SubsystemBase {
   drivetrain();
 
   /**
-   * Gives us field persistent controls. Wrapped around the existing 
+   * Gives us field persistent controls. Wrapped around the existing  
    * mecanum drive class; modifies the inputs before they are fed to 
    * driveCartesian.
    * @param xSpeed The x-speed of the robot (relative to the driver).
    * @param ySpeed The y-speed of the robot (relative to the driver).
    * @param zRotation The z-rotation of the robot (about its center).
    */
-  void MecanumDriveJoystick(double xSpeed, double ySpeed, double zRotation, bool fieldOriented);
+  void MecanumDriveJoystick(double xSpeed, double ySpeed, double zRotation);
 
   void MecanumDrive(double x, double y, double z);
 
-  void NormalizeWheelSpeeds(double FL, double BL, double FR, double BR);
+  void ZeroDriveEncoders();
+
+  void SetBrakeMode(bool brake);
+
+  void ZeroGyroYaw();
+
+  void Center(double distanceOff) {
+    
+  };
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -55,13 +63,13 @@ class drivetrain : public frc2::SubsystemBase {
 
   frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
-  frc::SlewRateLimiter xRateLimiter{xRateLimit};
-  frc::SlewRateLimiter yRateLimiter{yRateLimit};
-  frc::SlewRateLimiter zRateLimiter{zRateLimit};
+  frc::SlewRateLimiter<double>::Rate m_xRateLimiter{xRateLimit};
+  frc::SlewRateLimiter<double>::Rate m_yRateLimiter{yRateLimit};
+  frc::SlewRateLimiter<double>::Rate m_zRateLimiter{zRateLimit};
 
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};
   double m_adjYaw{0};
 
-  AHRS m_navX{frc::SPI::kMXP};
+  AHRS m_gyro{frc::SPI::kMXP};
 };

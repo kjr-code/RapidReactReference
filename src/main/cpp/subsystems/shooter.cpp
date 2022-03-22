@@ -2,7 +2,11 @@
 
 shooter::shooter() {
   // Implementation of subsystem constructor goes here.
-  m_motorShooter.RestoreFactoryDefaults();
+  m_motorShooter.EnableVoltageCompensation(nominalVoltage);
+  m_PIDShooter.SetP(shooterkP);
+  m_PIDShooter.SetI(shooterkI);
+  m_PIDShooter.SetD(shooterkD);
+  m_PIDShooter.SetFF(shooterFF); 
 }
 
 void shooter::RunShooter(const ShooterBehavior& behavior, double percentOut) {

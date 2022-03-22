@@ -29,16 +29,13 @@ void harvester::RunHarvester(const HarvesterDirection& direction) {
 void harvester::MoveHarvester(const PneumaticsDirection& direction) {
   switch(direction) {
     case PneumaticsDirection::kOut :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kForward);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kForward);
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
       break;
     case PneumaticsDirection::kIn :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kReverse);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kReverse);
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
       break;
     default :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kOff);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kOff);
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kOff);
       throw std::invalid_argument("Invalid PneumaticsDirection.\n");
   }
 }

@@ -30,9 +30,18 @@ namespace drivetrainConstants {
 
     constexpr double driveScalingCoefficient = 0.8;
 
+    constexpr bool fieldOriented = false;
+
     constexpr double xRateLimit = 1;
     constexpr double yRateLimit = 1;
     constexpr double zRateLimit = 1;
+
+    constexpr double wheelDiameterInch = 8;
+
+    constexpr bool voltageComp = true;
+    constexpr double satVoltage = 10;
+
+    constexpr bool driveMotorSaftey = false;
 
 }
 
@@ -45,10 +54,8 @@ namespace harvesterConstants {
     constexpr double motorMaxOutput = 0.5;
 
     //Solenoid Ports
-    constexpr int solenoidForwardLeft = PLACEHOLDER_INT;
-    constexpr int solenoidReverseLeft = PLACEHOLDER_INT;
-    constexpr int solenoidForwardRight = PLACEHOLDER_INT;
-    constexpr int solenoidReverseRight = PLACEHOLDER_INT;
+    constexpr int solenoidForward = PLACEHOLDER_INT;
+    constexpr int solenoidReverse = PLACEHOLDER_INT;
 
 }
 
@@ -60,7 +67,7 @@ namespace indexerConstants {
     constexpr double motorMaxOutput = 0.5;
 
     constexpr bool indexerInverted = false;
-    constexpr bool satVoltage = true;
+    constexpr double satVoltage = 10;
     constexpr bool voltageComp = true;
 
 }
@@ -70,7 +77,10 @@ namespace shooterConstants {
     //CAN ID
     constexpr int motorShooter = 7;
 
-    constexpr double motorMaxOutput = 0.5;
+    constexpr double nominalVoltage = 11;
+
+    constexpr double lowSpeedBase = 1500;
+    constexpr double highSpeedBase = 2500;
 
     constexpr double shooterkP = 0;
     constexpr double shooterkI = 0;

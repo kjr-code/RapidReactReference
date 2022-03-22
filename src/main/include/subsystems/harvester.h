@@ -28,10 +28,8 @@ class harvester : public frc2::SubsystemBase {
 
  private:
   ctre::phoenix::motorcontrol::can::WPI_TalonSRX m_motorHarvester{harvesterConstants::motorHarvester};
-  frc::DoubleSolenoid m_doubleSolenoidLeft{harvesterConstants::PHID, frc::PneumaticsModuleType::REVPH,
-                                           harvesterConstants::solenoidForwardLeft, harvesterConstants::solenoidReverseLeft};
-  frc::DoubleSolenoid m_doubleSolenoidRight{harvesterConstants::PHID, frc::PneumaticsModuleType::REVPH,
-                                            harvesterConstants::solenoidForwardRight, harvesterConstants::solenoidReverseRight};
+  frc::DoubleSolenoid m_doubleSolenoid{harvesterConstants::PHID, frc::PneumaticsModuleType::REVPH,
+                                           harvesterConstants::solenoidForward, harvesterConstants::solenoidReverse};
 
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
