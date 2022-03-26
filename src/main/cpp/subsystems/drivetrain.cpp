@@ -62,7 +62,7 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
   }
   // Alternate: m_mecanumDrive.DriveCartesian(m_adjXSpeed, m_adjYSpeed, zRotation);
   // m_mecanumDrive.DriveCartesian(m_adjYSpeed, m_adjXSpeed, zRotation);
-  MecanumDrive(m_xRateLimiter.calculate(xSpeed), m_yRateLimiter.calculate(ySpeed), m_zRateLimiter.calculate(zRotation));
+  MecanumDrive(xSpeed, ySpeed, zRotation);
 
 }
 
@@ -85,6 +85,18 @@ void drivetrain::MecanumDrive(double x, double y, double z) {
   m_motorRearLeft.Set(ControlMode::PercentOutput, BL);
   m_motorFrontRight.Set(ControlMode::PercentOutput, FR);
   m_motorRearRight.Set(ControlMode::PercentOutput, BR);
+}
+
+void drivetrain::Center(double angleXOff) {
+  double kP = shootAdjustmentkP; // for proportional centering movement to be implemented later
+
+  if (angleXOff > 0) {
+    MecanumDrive(0, drivetrainCenteringSpeed, 0);
+  } else if (angleXOff < 0) {
+    MecanumDrive(0, -drivetrainCenteringSpeed, 0);
+  } else {
+    MecanumDrive(0, 0, 0);
+  }
 }
 
 void drivetrain::ZeroDriveEncoders() {

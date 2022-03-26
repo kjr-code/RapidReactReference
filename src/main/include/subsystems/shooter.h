@@ -5,6 +5,7 @@
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableEntry.h> 
 #include <networktables/NetworkTableInstance.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "Constants.h"
 
@@ -14,12 +15,19 @@ class shooter : public frc2::SubsystemBase {
  public:
   shooter();
 
-  enum class ShooterBehavior {kOn, kOff};
-  void RunShooter(const ShooterBehavior& behavior, double percentOut = 0);
+  enum class ShooterBehavior {kHigh, kLow, kOff};
+  void RunShooter(const ShooterBehavior& behavior);
+
+  double GetError();
+
+  double DistanceToTargetIn();
+
   /**
    * Checks to see if robot is at scoring distance from the target.
    */
-  int Goldilocks();
+  bool Goldilocks();
+
+  void ShootHigh();
 
 
 
@@ -37,6 +45,12 @@ class shooter : public frc2::SubsystemBase {
  private:
   rev::CANSparkMax m_motorShooter{shooterConstants::motorShooter, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxPIDController m_PIDShooter{m_motorShooter.GetPIDController()};
-  nt::NetworkTable m_table;
-  nt::NetworkTableEntry m_x, m_y;
+  double tx{0}, ty{0};
+  double m_targetHeight{targetHeightIn},
+          m_limelightAngle{limelightAngleDEG},
+          m_limelightHeight{limelightHeightIn},
+          m_targetAngle{0},
+          m_distanceToTargetIn{0},
+          m_totalAngleToTargetRAD{0},
+          m_RPM{0};
 };

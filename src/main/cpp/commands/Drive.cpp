@@ -13,10 +13,12 @@ Drive::Drive(drivetrain* drivetrain,
   AddRequirements({m_drivetrain});
 }
 
-void Drive::Initialize() { printf("Drive initialized.\n"); }
+void Drive::Initialize() { 
+  m_drivetrain->SetBrakeMode(false);
+  printf("Drive initialized.\n"); }
 
 void Drive::Execute() {
-    m_drivetrain->BootlegSwerve(m_xSpeed(), m_ySpeed(), m_zRotation());
+    m_drivetrain->MecanumDriveJoystick(m_xSpeed(), m_ySpeed(), m_zRotation());
 }
 
 void Drive::End(bool interrupted) { printf("**Drive has been interrupted!**\n"); }

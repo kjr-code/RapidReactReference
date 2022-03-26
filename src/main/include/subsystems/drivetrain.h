@@ -13,6 +13,7 @@
 using namespace controllerConstants;
 using namespace drivetrainConstants;
 
+
 class drivetrain : public frc2::SubsystemBase {
  public:
   drivetrain();
@@ -35,9 +36,7 @@ class drivetrain : public frc2::SubsystemBase {
 
   void ZeroGyroYaw();
 
-  void Center(double distanceOff) {
-    
-  };
+  void Center(double angleXOff);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -63,13 +62,13 @@ class drivetrain : public frc2::SubsystemBase {
 
   frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
-  frc::SlewRateLimiter<double>::Rate m_xRateLimiter{xRateLimit};
-  frc::SlewRateLimiter<double>::Rate m_yRateLimiter{yRateLimit};
-  frc::SlewRateLimiter<double>::Rate m_zRateLimiter{zRateLimit};
-
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};
   double m_adjYaw{0};
+
+  //frc::SlewRateLimiter<double()> m_xRateLimiter{xRateLimit/1_s};
+  //frc::SlewRateLimiter<double()> m_yRateLimiter{yRateLimit/1_s};
+  //frc::SlewRateLimiter<double()> m_zRateLimiter{zRateLimit/1_s};
 
   AHRS m_gyro{frc::SPI::kMXP};
 };

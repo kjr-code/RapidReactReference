@@ -4,6 +4,7 @@
 #include <frc2/command/CommandHelper.h>
 
 #include "subsystems/shooter.h"
+#include "subsystems/drivetrain.h"
 
 /**
  * The command that shoots at the 2pt. goal.
@@ -16,7 +17,7 @@ class ShootHigh
    *
    * @param shooter The subsystem used by this command.
    */
-  explicit ShootHigh(shooter* shooter);
+  explicit ShootHigh(shooter* shooter, drivetrain* drivetrain);
 
   void Initialize() override;
 
@@ -28,4 +29,5 @@ class ShootHigh
 
  private:
   shooter* m_shooter;
+  drivetrain* m_drivetrain;
 };

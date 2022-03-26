@@ -40,7 +40,7 @@ void RobotContainer::ConfigureButtonBindings() {
     Harvester(&m_harvester, harvester::HarvesterDirection::kReverse));
 
   if (m_controllerAux.GetRightTriggerAxis() >= 0.75) {
-    frc2::Trigger().WhenActive(ShootHigh(&m_shooter));
+    frc2::Trigger().WhenActive(ShootHigh(&m_shooter, &m_drivetrain));
   }
   
   if (m_controllerAux.GetLeftTriggerAxis() >= 0.75) {

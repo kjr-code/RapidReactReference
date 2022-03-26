@@ -8,8 +8,14 @@ ShootLow::ShootLow(shooter* shooter)
 
 void ShootLow::Initialize() { printf("ShootLow initialized.\n"); }
 
-void ShootLow::Execute() { printf("Better than nothing, I guess.\n"); }
+void ShootLow::Execute() { 
+    
+    m_shooter->RunShooter(shooter::ShooterBehavior::kLow);
 
-void ShootLow::End(bool interrupted) {}
+    printf("Better than nothing, I guess.\n"); }
+
+void ShootLow::End(bool interrupted) {
+    m_shooter->RunShooter(shooter::ShooterBehavior::kOff);
+}
 
 bool ShootLow::IsFinished() { return true; }

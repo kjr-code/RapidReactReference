@@ -43,6 +43,9 @@ namespace drivetrainConstants {
 
     constexpr bool driveMotorSaftey = false;
 
+    constexpr bool shootAdjustmentkP = 0.1;
+    constexpr double drivetrainCenteringSpeed = 0.25;
+
 }
 
 namespace harvesterConstants {
@@ -79,20 +82,22 @@ namespace shooterConstants {
 
     constexpr double nominalVoltage = 11;
 
-    constexpr double lowSpeedBase = 1500;
+    constexpr double lowSpeedBase = 1500; //base values are for testing purposes with smart dashboard
     constexpr double highSpeedBase = 2500;
+
+    constexpr double shootLowSpeed = 0;
 
     constexpr double shooterkP = 0;
     constexpr double shooterkI = 0;
     constexpr double shooterkD = 0;
     constexpr double shooterFF = 0;
 
-    constexpr double maxDistanceFromTarget = 0;
-    constexpr double minDistanceFromTarget = 0;
-    constexpr double maxAimDeviation = 0;
+    constexpr double maxDistanceFromTargetIn = 10000000;
+    constexpr double minDistanceFromTargetIn = 0;
+    constexpr double maxAimDeviationDEG = 1;
 
-    constexpr double targetHeightMeters = 0;
-    constexpr double limelightHeightMeters = 0;
+    constexpr double targetHeightIn = 0;
+    constexpr double limelightHeightIn = 0;
     constexpr double limelightAngleDEG = 0;
 
 
