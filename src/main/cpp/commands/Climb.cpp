@@ -15,4 +15,4 @@ void Climb::Execute() {
 
 void Climb::End(bool interrupted) { printf("**Climb has been interrupted!**\n"); }
 
-bool Climb::IsFinished() { return true; }
+bool Climb::IsFinished() { return false; }

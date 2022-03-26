@@ -43,7 +43,7 @@ namespace drivetrainConstants {
 
     constexpr bool driveMotorSaftey = false;
 
-    constexpr bool shootAdjustmentkP = 0.1;
+    constexpr double shootAdjustmentkP = 0.1;
     constexpr double drivetrainCenteringSpeed = 0.25;
 
 }
@@ -57,8 +57,8 @@ namespace harvesterConstants {
     constexpr double motorMaxOutput = 0.5;
 
     //Solenoid Ports
-    constexpr int solenoidForward = PLACEHOLDER_INT;
-    constexpr int solenoidReverse = PLACEHOLDER_INT;
+    constexpr int solenoidForward = 0;
+    constexpr int solenoidReverse = 1;
 
 }
 
@@ -110,9 +110,9 @@ namespace climberConstants {
     constexpr int PHID = 8;
 
     //Solenoid Ports
-    constexpr int solenoidForwardLeft = PLACEHOLDER_INT;
-    constexpr int solenoidReverseLeft = PLACEHOLDER_INT;
-    constexpr int solenoidForwardRight = PLACEHOLDER_INT;
-    constexpr int solenoidReverseRight = PLACEHOLDER_INT;
+    constexpr int solenoidForwardLeft = 2;
+    constexpr int solenoidReverseLeft = 3;
+    constexpr int solenoidForwardRight = 4;
+    constexpr int solenoidReverseRight = 5;
 
 }

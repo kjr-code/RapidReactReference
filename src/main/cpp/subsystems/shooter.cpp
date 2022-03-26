@@ -42,7 +42,7 @@ double shooter::DistanceToTargetIn() {
   double distance;
   m_targetAngle = ty;
 
-  m_totalAngleToTargetRAD = (m_targetAngle + m_limelightAngle) * (M_PI / 180);
+  m_totalAngleToTargetRAD = (m_targetAngle + m_limelightAngle) * (3.14 / 180);
 
   distance = (targetHeightIn - limelightHeightIn) / tan(m_totalAngleToTargetRAD);
 

@@ -7,6 +7,8 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
                                                 &m_shooter,
                                                 &m_indexer) {
   // Initialize all of your commands and subsystems here INVESTIGATE
+  bool condition;
+  frc2::Trigger exampleTrigger([&condition] {return condition;});
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -33,19 +35,50 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton(&m_controllerAux, 1).WhenActive(
+  frc2::JoystickButton(&m_controllerMain, 1).WhileActiveContinous  (
     Harvester(&m_harvester, harvester::HarvesterDirection::kForward));
 
-  frc2::JoystickButton(&m_controllerAux, 2).WhenActive(
+  frc2::JoystickButton(&m_controllerMain, 2).WhileActiveContinous(
     Harvester(&m_harvester, harvester::HarvesterDirection::kReverse));
 
-  if (m_controllerAux.GetRightTriggerAxis() >= 0.75) {
-    frc2::Trigger().WhenActive(ShootHigh(&m_shooter, &m_drivetrain));
-  }
-  
+  frc2::JoystickButton(&m_controllerMain, 6).WhileActiveContinous(
+    ShootHigh(&m_shooter, &m_drivetrain));
+
+  frc2::JoystickButton(&m_controllerMain, 5).WhileActiveContinous(
+    ShootLow(&m_shooter));
+
+
+  //bool shootHighCondition = TriggerPressed(true, true);
+  //frc2::Trigger highTrigger([&shootHighCondition] {return shootHighCondition;});
+  //highTrigger.WhileActiveContinous(ShootHigh(&m_shooter, &m_drivetrain));
+
+  //bool shootLowCondition = TriggerPressed(false, true);
+  //frc2::Trigger lowTrigger([&shootLowCondition] {return shootLowCondition;});
+  //lowTrigger.WhileActiveContinous(ShootLow(&m_shooter));
+
+/*
   if (m_controllerAux.GetLeftTriggerAxis() >= 0.75) {
-    frc2::Trigger().WhenActive(ShootLow(&m_shooter));
+    frc2::Trigger().WhileActiveContinous(ShootLow(&m_shooter));
   }
+*/
+}
+
+bool RobotContainer::TriggerPressed(bool right, bool driveController) {
+
+  if (right) {
+    if (driveController) {
+      return (m_controllerMain.GetRightTriggerAxis() >= 0.75);
+    } else {
+      return (m_controllerAux.GetRightTriggerAxis() >= 0.75);
+    }
+  } else {
+    if (driveController) {
+      return (m_controllerMain.GetLeftTriggerAxis() >= 0.75);
+    } else {
+      return (m_controllerAux.GetLeftTriggerAxis() >= 0.75);
+    }
+  }
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

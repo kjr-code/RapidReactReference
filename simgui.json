@@ -1,6 +1,21 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "Talon FX[2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[3]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon SRX[4]": {
+        "header": {
+          "open": true
+        }
+      },
       "navX-Sensor[4]": {
         "header": {
           "open": true

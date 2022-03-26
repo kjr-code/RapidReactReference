@@ -24,11 +24,11 @@ void ShootHigh::Execute() {
     }
 
     //m_shooter->RunShooter(shooter::ShooterBehavior::kHigh);
-    printf("Kobe.\n");
+    //printf("Kobe.\n");
     }
 
 void ShootHigh::End(bool interrupted) {
     m_shooter->RunShooter(shooter::ShooterBehavior::kOff);
 }
 
-bool ShootHigh::IsFinished() { return true; }
+bool ShootHigh::IsFinished() { return false; }

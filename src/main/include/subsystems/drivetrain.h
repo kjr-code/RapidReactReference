@@ -60,7 +60,7 @@ class drivetrain : public frc2::SubsystemBase {
 
   TalonFXConfiguration m_talonFXConfiguration{};
 
-  frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
+  //frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};

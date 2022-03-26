@@ -33,8 +33,8 @@ drivetrain::drivetrain() {
   m_motorFrontRight.SetSafetyEnabled(driveMotorSaftey);
   m_motorRearRight.SetSafetyEnabled(driveMotorSaftey);
 
-  m_mecanumDrive.SetDeadband(motorDeadband);
-  m_mecanumDrive.SetMaxOutput(motorMaxOutput);
+  //m_mecanumDrive.SetDeadband(motorDeadband);
+  //m_mecanumDrive.SetMaxOutput(motorMaxOutput);
 
   m_gyro.ZeroYaw();
 }
@@ -51,7 +51,7 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
   
   if (fieldOriented) {
     // Converts yaw from degrees to radians.
-    m_adjYaw = (m_gyro.GetYaw() * M_PI / 180);
+    m_adjYaw = (m_gyro.GetYaw() * 3.14 / 180);
   
     // DON'T TOUCH IF YOU DON'T UNDERSTAND THE TRIG:
     m_adjXSpeed = xSpeed*cos(m_adjYaw)-ySpeed*sin(m_adjYaw);

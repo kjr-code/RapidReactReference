@@ -18,4 +18,4 @@ void ShootLow::End(bool interrupted) {
     m_shooter->RunShooter(shooter::ShooterBehavior::kOff);
 }
 
-bool ShootLow::IsFinished() { return true; }
+bool ShootLow::IsFinished() { return false; }

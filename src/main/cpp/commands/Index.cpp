@@ -15,4 +15,4 @@ void Index::Execute() {
 
 void Index::End(bool interrupted) { printf("**Index has been interrupted!**\n"); }
 
-bool Index::IsFinished() { return true; }
+bool Index::IsFinished() { return false; }
