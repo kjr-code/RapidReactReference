@@ -1,5 +1,10 @@
 #pragma once
 
+#include <wpi/numbers>
+#include <units/voltage.h>
+#include <units/time.h>
+#include <units/length.h>
+
 /**
  * This header contains hold robot-wide numerical or boolean constants ONLY.
  * 
@@ -36,8 +41,6 @@ namespace drivetrainConstants {
     constexpr double yRateLimit = 1;
     constexpr double zRateLimit = 1;
 
-    constexpr double wheelDiameterInch = 8;
-
     constexpr bool voltageComp = true;
     constexpr double satVoltage = 10;
 
@@ -45,6 +48,15 @@ namespace drivetrainConstants {
 
     constexpr double shootAdjustmentkP = 0.1;
     constexpr double drivetrainCenteringSpeed = 0.25;
+
+    constexpr double wheelDiameterMeters = 0.2032;
+    constexpr double falconCountsPerRevolution = 2048;
+    constexpr double falconDistancePerPulse = (wheelDiameterMeters * wpi::numbers::pi) / falconCountsPerRevolution;
+    constexpr double trackWidth = 0;
+
+    constexpr auto ks = 0_V;
+    constexpr auto kv = 0 * 1_V * 1_s / 1_m;
+    constexpr auto ka = 0 * 1_V * 1_s * 1_s / 1_m;
 
 }
 

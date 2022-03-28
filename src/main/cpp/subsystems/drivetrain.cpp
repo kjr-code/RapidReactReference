@@ -33,6 +33,8 @@ drivetrain::drivetrain() {
   m_motorFrontRight.SetSafetyEnabled(driveMotorSaftey);
   m_motorRearRight.SetSafetyEnabled(driveMotorSaftey);
 
+
+
   //m_mecanumDrive.SetDeadband(motorDeadband);
   //m_mecanumDrive.SetMaxOutput(motorMaxOutput);
 
@@ -126,8 +128,35 @@ void drivetrain::ZeroGyroYaw() {
 
 void drivetrain::Periodic() {
   // Implementation of subsystem periodic method goes here.
+  m_odometry.Update(m_gyro.GetRotation2d(),
+                    units::meter_t(GetEncoderDistance(true)),
+                    units::meter_t(GetEncoderDistance(false)));
 
+}
 
+void drivetrain::TankDriveVolts(double left, double right) {
+  m_leftMotors.SetVoltage(units::volt_t(left));
+  m_rightMotors.SetVoltage(units::volt_t(right));
+}
+
+double drivetrain::GetEncoderDistance(bool left) {
+  double distance;
+  if (left) {
+    distance = 0.5 * (m_motorFrontLeft.GetSelectedSensorPosition() + m_motorRearLeft.GetSelectedSensorPosition()) * falconDistancePerPulse;
+  } else {
+    distance = 0.5 * (m_motorFrontRight.GetSelectedSensorPosition() + m_motorRearRight.GetSelectedSensorPosition()) * falconDistancePerPulse;
+  }
+  return distance;
+}
+
+double drivetrain::GetEncoderRate(bool left) {
+  double rate;
+  if (left) {
+    rate = (0.5 * (m_motorFrontLeft.GetSelectedSensorVelocity() + m_motorRearLeft.GetSelectedSensorVelocity()) * 10) * falconDistancePerPulse;
+  } else {
+    rate = (0.5 * (m_motorFrontLeft.GetSelectedSensorVelocity() + m_motorRearLeft.GetSelectedSensorVelocity()) * 10) * falconDistancePerPulse;
+  }
+  return rate;
 }
 
 void drivetrain::SimulationPeriodic() {

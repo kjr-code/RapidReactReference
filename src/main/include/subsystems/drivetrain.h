@@ -5,7 +5,14 @@
 #include <AHRS.h>
 #include <ctre/phoenix.h>
 #include <frc/drive/MecanumDrive.h>
+#include <frc/drive/DifferentialDrive.h>
+#include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/filter/SlewRateLimiter.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc/kinematics/DifferentialDriveOdometry.h>
+#include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
+#include <frc/controller/RamseteController.h>
+#include <frc/controller/SimpleMotorFeedforward.h>
 #include <math.h>
 
 #include "Constants.h"
@@ -29,6 +36,12 @@ class drivetrain : public frc2::SubsystemBase {
   void MecanumDriveJoystick(double xSpeed, double ySpeed, double zRotation);
 
   void MecanumDrive(double x, double y, double z);
+
+  void TankDriveVolts(double left, double right);
+
+  double GetEncoderDistance(bool left);
+
+  double GetEncoderRate(bool left);
 
   void ZeroDriveEncoders();
 
@@ -58,7 +71,14 @@ class drivetrain : public frc2::SubsystemBase {
   WPI_TalonFX m_motorRearLeft{motorRearLeft};
   WPI_TalonFX m_motorRearRight{motorRearRight};
 
+  frc::MotorControllerGroup m_leftMotors{m_motorFrontLeft, m_motorFrontRight};
+  frc::MotorControllerGroup m_rightMotors{m_motorFrontRight, m_motorRearRight};
+
   TalonFXConfiguration m_talonFXConfiguration{};
+
+  frc::DifferentialDrive m_differentialDrive{m_leftMotors, m_rightMotors};
+
+  frc::DifferentialDriveOdometry m_odometry{m_gyro.GetRotation2d()};
 
   //frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
