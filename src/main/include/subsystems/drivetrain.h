@@ -78,7 +78,9 @@ class drivetrain : public frc2::SubsystemBase {
 
   frc::DifferentialDrive m_differentialDrive{m_leftMotors, m_rightMotors};
 
-  frc::DifferentialDriveOdometry m_odometry{m_gyro.GetRotation2d()};
+  frc::DifferentialDriveOdometry m_odometry{frc::Rotation2d(0_deg),
+                                            frc::Pose2d(frc::Translation2d(0_m, 0_m),
+                                                        frc::Rotation2d(0_deg))};
 
   //frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
@@ -91,4 +93,6 @@ class drivetrain : public frc2::SubsystemBase {
   //frc::SlewRateLimiter<double()> m_zRateLimiter{zRateLimit/1_s};
 
   AHRS m_gyro{frc::SPI::kMXP};
+
+
 };

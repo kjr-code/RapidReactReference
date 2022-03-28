@@ -131,7 +131,8 @@ void drivetrain::Periodic() {
   m_odometry.Update(m_gyro.GetRotation2d(),
                     units::meter_t(GetEncoderDistance(true)),
                     units::meter_t(GetEncoderDistance(false)));
-
+  m_differentialDrive.Feed();
+  m_differentialDrive.FeedWatchdog();
 }
 
 void drivetrain::TankDriveVolts(double left, double right) {

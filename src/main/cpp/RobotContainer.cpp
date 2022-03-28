@@ -47,11 +47,11 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileActiveContinous(
     Index(&m_indexer, indexer::IndexerDirection::kReverse));
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Axis::kLeftTrigger).WhileActiveContinous(
-    ShootLow(&m_shooter));
+  frc2::Trigger leftTrigger ([this] {return m_controllerMain.GetLeftTriggerAxis() >= 0.75;});
+  leftTrigger.WhileActiveContinous(ShootLow(&m_shooter));
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Axis::kRightTrigger).WhileActiveContinous(
-    ShootHigh(&m_shooter, &m_drivetrain));
+  frc2::Trigger rightTrigger ([this] {return m_controllerMain.GetRightTriggerAxis() >= 0.75;});
+  rightTrigger.WhileActiveContinous(ShootHigh(&m_shooter, &m_drivetrain));
 
 
   //bool shootHighCondition = TriggerPressed(true, true);
