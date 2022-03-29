@@ -35,7 +35,7 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileActiveContinous  (
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileActiveContinous(
     Harvester(&m_harvester, harvester::HarvesterDirection::kForward)); 
 
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileActiveContinous(
@@ -68,7 +68,7 @@ void RobotContainer::ConfigureButtonBindings() {
   }
 */
 }
-
+/*
 bool RobotContainer::TriggerPressed(bool right, bool driveController) {
 
   if (right) {
@@ -86,7 +86,7 @@ bool RobotContainer::TriggerPressed(bool right, bool driveController) {
   }
 
 }
-
+*/
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   return &m_Autonomous;

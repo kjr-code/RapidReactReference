@@ -7,7 +7,9 @@ Harvester::Harvester(harvester* harvester, const harvester::HarvesterDirection& 
         AddRequirements({m_harvester});
     }
 
-void Harvester::Initialize() {}
+void Harvester::Initialize() {
+    printf("harvester initialized");
+}
 
 void Harvester::Execute() {
     m_harvester->RunHarvester(m_direction);
@@ -15,6 +17,7 @@ void Harvester::Execute() {
 
 void Harvester::End(bool interrupted) {
     m_harvester->RunHarvester(harvester::HarvesterDirection::kOff);
+    printf("harvester interrupted");
 }
 
 bool Harvester::IsFinished() { return false; }

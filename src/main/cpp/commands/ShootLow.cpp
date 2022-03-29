@@ -12,7 +12,8 @@ void ShootLow::Execute() {
     
     m_shooter->RunShooter(shooter::ShooterBehavior::kLow);
 
-    printf("Better than nothing, I guess.\n"); }
+    //printf("Better than nothing, I guess.\n"); 
+    }
 
 void ShootLow::End(bool interrupted) {
     m_shooter->RunShooter(shooter::ShooterBehavior::kOff);

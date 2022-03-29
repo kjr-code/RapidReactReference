@@ -26,7 +26,6 @@ void shooter::RunShooter(const ShooterBehavior& behavior) {
       break;
     default :
       m_PIDShooter.SetReference(0, rev::CANSparkMax::ControlType::kVelocity);
-      throw std::invalid_argument("Invalid ShooterBehavior.\n");
   }
 }
 

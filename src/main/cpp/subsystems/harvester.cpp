@@ -22,7 +22,8 @@ void harvester::RunHarvester(const HarvesterDirection& direction) {
     default :
       MoveHarvester(PneumaticsDirection::kIn);
       m_motorHarvester.Set(0);
-      throw std::invalid_argument("Invalid HarvesterDirection.\n");
+      break;
+      
   }
 }
 

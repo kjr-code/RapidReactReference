@@ -50,7 +50,7 @@ class RobotContainer {
 
   void ConfigureButtonBindings();
 
-  bool TriggerPressed(bool right, bool driveController);
+ // bool TriggerPressed(bool right, bool driveController);
 
   frc::XboxController m_controllerMain{controllerMain};
   frc::XboxController m_controllerAux{controllerAux};

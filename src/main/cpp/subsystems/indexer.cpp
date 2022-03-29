@@ -20,7 +20,7 @@ void indexer::RunIndexer(const IndexerDirection& direction) {
         break;
       default :
         m_motorIndexer.Set(0);
-        throw std::invalid_argument("Invalid IndexerDirection.\n");
+        break;
     }
 }
 

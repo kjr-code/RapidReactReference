@@ -79,7 +79,7 @@ namespace indexerConstants {
     //CAN ID
     constexpr int motorIndexer = 5;
 
-    constexpr double motorMaxOutput = 0.5;
+    constexpr double motorMaxOutput = 0.2;
 
     constexpr bool indexerInverted = false;
     constexpr double satVoltage = 10;
@@ -99,7 +99,7 @@ namespace shooterConstants {
 
     constexpr double shootLowSpeed = 0;
 
-    constexpr double shooterkP = 0;
+    constexpr double shooterkP = 3.4757E-08;
     constexpr double shooterkI = 0;
     constexpr double shooterkD = 0;
     constexpr double shooterFF = 0;

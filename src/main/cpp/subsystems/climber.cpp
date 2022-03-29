@@ -17,7 +17,8 @@ void climber::RunClimb(const ClimbDirection& direction) {
     default :
       m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kOff);
       m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kOff);
-      throw std::invalid_argument("Invalid ClimbDirection.\n");
+      //throw std::invalid_argument("Invalid ClimbDirection.\n");
+      break;
   }
 }
 
