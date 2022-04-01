@@ -48,7 +48,7 @@ class shooter : public frc2::SubsystemBase {
  private:
   rev::CANSparkMax m_motorShooter{shooterConstants::motorShooter, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxPIDController m_PIDShooter{m_motorShooter.GetPIDController()};
-  
+  rev::SparkMaxRelativeEncoder m_encoder{m_motorShooter.GetEncoder()};
   double tx{0}, ty{0};
   double m_targetHeight{targetHeightIn},
           m_limelightAngle{limelightAngleDEG},

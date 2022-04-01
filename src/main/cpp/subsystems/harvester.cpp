@@ -8,19 +8,19 @@ harvester::harvester() {
 void harvester::RunHarvester(const HarvesterDirection& direction) {
   switch(direction) {
     case HarvesterDirection::kForward :
-      MoveHarvester(PneumaticsDirection::kOut);
+      //MoveHarvester(PneumaticsDirection::kOut);
       m_motorHarvester.Set(harvesterConstants::motorMaxOutput);
       break;
     case HarvesterDirection::kReverse :
-      MoveHarvester(PneumaticsDirection::kOut);
+      //MoveHarvester(PneumaticsDirection::kOut);
       m_motorHarvester.Set(-harvesterConstants::motorMaxOutput);
       break;
     case HarvesterDirection::kOff :
-      MoveHarvester(PneumaticsDirection::kIn);
+      //MoveHarvester(PneumaticsDirection::kIn);
       m_motorHarvester.Set(0);
       break;
     default :
-      MoveHarvester(PneumaticsDirection::kIn);
+      //MoveHarvester(PneumaticsDirection::kIn);
       m_motorHarvester.Set(0);
       break;
       

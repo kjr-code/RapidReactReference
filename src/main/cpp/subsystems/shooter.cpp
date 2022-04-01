@@ -10,6 +10,10 @@ shooter::shooter() {
   m_motorShooter.SetInverted(shooterInverted);
   frc::SmartDashboard::PutNumber("ShootLowSpeed", lowSpeedBase);
   frc::SmartDashboard::PutNumber("ShootHighSpeed", highSpeedBase);
+  frc::SmartDashboard::PutNumber("FF gain", shooterFF);
+  frc::SmartDashboard::PutNumber("P Gain", shooterkP);
+  frc::SmartDashboard::PutNumber("I Gain", shooterkI);
+  frc::SmartDashboard::PutNumber("D Gain", shooterkD);
 }
 
 void shooter::RunShooter(const ShooterBehavior& behavior) {
@@ -17,18 +21,21 @@ void shooter::RunShooter(const ShooterBehavior& behavior) {
   switch(behavior) {
     case ShooterBehavior::kHigh :
       speed = frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase);
-      m_PIDShooter.SetReference(speed, 
-                                rev::CANSparkMax::ControlType::kVelocity);
+      //m_PIDShooter.SetReference(speed, 
+                                //rev::CANSparkMax::ControlType::kVelocity);
+      m_motorShooter.SetVoltage(units::volt_t(speed));
       //ShootHigh();
       break;
     case ShooterBehavior::kLow :
       speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
-      m_PIDShooter.SetReference(speed, 
-                                rev::CANSparkMax::ControlType::kVelocity);
+      m_motorShooter.SetVoltage(units::volt_t(speed));
+      //m_PIDShooter.SetReference(speed, 
+                               // rev::CANSparkMax::ControlType::kVelocity);
       //m_motorShooter.Set(shootLowSpeed);
       break;
     case ShooterBehavior::kOff :
-      m_PIDShooter.SetReference(0, rev::CANSparkMax::ControlType::kVelocity);
+      //m_PIDShooter.SetReference(0, rev::CANSparkMax::ControlType::kVelocity);
+      m_motorShooter.SetVoltage(units::volt_t(0));
       break;
     default :
       m_PIDShooter.SetReference(0, rev::CANSparkMax::ControlType::kVelocity);
@@ -77,6 +84,12 @@ void shooter::Periodic() {
 
   frc::SmartDashboard::PutNumber("Distance From Target Inches", DistanceToTargetIn());
   frc::SmartDashboard::PutNumber("Calculated RPM", m_RPM);
+  frc::SmartDashboard::PutNumber("currentRPM", m_encoder.GetVelocity());
+  m_PIDShooter.SetFF(frc::SmartDashboard::GetNumber("FF Gain", shooterFF));
+  m_PIDShooter.SetP(frc::SmartDashboard::GetNumber("P Gain", shooterkP));
+  m_PIDShooter.SetI(frc::SmartDashboard::GetNumber("I Gain", shooterkI));
+  m_PIDShooter.SetD(frc::SmartDashboard::GetNumber("D Gain", shooterkD));
+
 }
 
 void shooter::SimulationPeriodic() {

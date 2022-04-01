@@ -4,7 +4,7 @@ ShootHigh::ShootHigh(shooter* shooter, drivetrain* drivetrain)
     : m_shooter{shooter},
     m_drivetrain{drivetrain} {
         SetName("ShootHigh");
-        AddRequirements({m_shooter});
+        AddRequirements({m_shooter, m_drivetrain});
     }
 
 void ShootHigh::Initialize() { 

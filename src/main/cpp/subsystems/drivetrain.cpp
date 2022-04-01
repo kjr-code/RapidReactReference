@@ -47,9 +47,9 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
   xSpeed = -xSpeed;
   zRotation = -zRotation;
 
-  xSpeed = (m_a * pow(xSpeed, 3)) + ((1 - m_a) * xSpeed) * motorMaxOutput;
-  ySpeed = (m_a * pow(ySpeed, 3)) + ((1 - m_a) * ySpeed) * motorMaxOutput;
-  zRotation = (m_a * pow(zRotation, 3)) + ((1 - m_a) * zRotation) * motorMaxOutput;
+  xSpeed = (m_a * pow(xSpeed, 3)) + ((1 - m_a) * xSpeed);
+  ySpeed = (m_a * pow(ySpeed, 3)) + ((1 - m_a) * ySpeed);
+  zRotation = (m_a * pow(zRotation, 3)) + ((1 - m_a) * zRotation);
   
   if (fieldOriented) {
     // Converts yaw from degrees to radians.
@@ -64,7 +64,7 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
   }
   // Alternate: m_mecanumDrive.DriveCartesian(m_adjXSpeed, m_adjYSpeed, zRotation);
   // m_mecanumDrive.DriveCartesian(m_adjYSpeed, m_adjXSpeed, zRotation);
-  MecanumDrive(ySpeed, xSpeed, zRotation);
+  MecanumDrive(ySpeed*motorMaxOutput, xSpeed*motorMaxOutput, zRotation*motorMaxOutput);
 
 }
 

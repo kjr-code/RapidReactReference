@@ -33,7 +33,7 @@ namespace drivetrainConstants {
     constexpr double motorMaxOutput = 0.5;
     constexpr double motorDeadband = 0.05;
 
-    constexpr double driveScalingCoefficient = 0.8;
+    constexpr double driveScalingCoefficient = 0.6;
 
     constexpr bool fieldOriented = false;
 
@@ -47,7 +47,7 @@ namespace drivetrainConstants {
     constexpr bool driveMotorSaftey = false;
 
     constexpr double shootAdjustmentkP = 0.1;
-    constexpr double drivetrainCenteringSpeed = 0.2;
+    constexpr double drivetrainCenteringSpeed = 0.05;
 
     constexpr double wheelDiameterMeters = 0.2032;
     constexpr double falconCountsPerRevolution = 2048;
@@ -69,8 +69,8 @@ namespace harvesterConstants {
     constexpr double motorMaxOutput = 0.5;
 
     //Solenoid Ports
-    constexpr int solenoidForward = 0;
-    constexpr int solenoidReverse = 1;
+    constexpr int solenoidForward = 4;
+    constexpr int solenoidReverse = 6;
 
 }
 
@@ -94,19 +94,19 @@ namespace shooterConstants {
 
     constexpr double nominalVoltage = 11;
 
-    constexpr double lowSpeedBase = 1500; //base values are for testing purposes with smart dashboard
-    constexpr double highSpeedBase = 2500;
+    constexpr double lowSpeedBase = 5; //base values are for testing purposes with smart dashboard
+    constexpr double highSpeedBase = 7;
 
     constexpr double shootLowSpeed = 0;
 
-    constexpr double shooterkP = 6.2811E-05; //suggested by sysID tool
+    constexpr double shooterkP = 5.2183E-05; //suggested by sysID tool
     constexpr double shooterkI = 0;
     constexpr double shooterkD = 0;
-    constexpr double shooterFF = 1/5676; //pid max output divided by free speed
+    constexpr double shooterFF = 0; //pid max output divided by free speed
 
     constexpr double maxDistanceFromTargetIn = 10000000;
     constexpr double minDistanceFromTargetIn = 0;
-    constexpr double maxAimDeviationDEG = 0.5;
+    constexpr double maxAimDeviationDEG = 2;
 
     constexpr double targetHeightIn = 101;
     constexpr double limelightHeightIn = 31.5;
@@ -130,7 +130,7 @@ namespace climberConstants {
     //Solenoid Ports
     constexpr int solenoidForwardLeft = 2;
     constexpr int solenoidReverseLeft = 3;
-    constexpr int solenoidForwardRight = 4;
+    constexpr int solenoidForwardRight = 0;
     constexpr int solenoidReverseRight = 5;
 
 }
