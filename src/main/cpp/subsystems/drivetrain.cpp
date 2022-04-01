@@ -44,12 +44,12 @@ drivetrain::drivetrain() {
 void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRotation) {
   double m_a = driveScalingCoefficient;
   // We need to invert input from joystick. -1 is forward with raw input.
-  ySpeed = -ySpeed;
+  xSpeed = -xSpeed;
   zRotation = -zRotation;
 
-  xSpeed = (m_a * pow(xSpeed, 3)) + ((1 - m_a) * xSpeed);
-  ySpeed = (m_a * pow(ySpeed, 3)) + ((1 - m_a) * ySpeed);
-  zRotation = (m_a * pow(zRotation, 3)) + ((1 - m_a) * zRotation);
+  xSpeed = (m_a * pow(xSpeed, 3)) + ((1 - m_a) * xSpeed) * motorMaxOutput;
+  ySpeed = (m_a * pow(ySpeed, 3)) + ((1 - m_a) * ySpeed) * motorMaxOutput;
+  zRotation = (m_a * pow(zRotation, 3)) + ((1 - m_a) * zRotation) * motorMaxOutput;
   
   if (fieldOriented) {
     // Converts yaw from degrees to radians.
@@ -64,7 +64,7 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
   }
   // Alternate: m_mecanumDrive.DriveCartesian(m_adjXSpeed, m_adjYSpeed, zRotation);
   // m_mecanumDrive.DriveCartesian(m_adjYSpeed, m_adjXSpeed, zRotation);
-  MecanumDrive(xSpeed, ySpeed, zRotation);
+  MecanumDrive(ySpeed, xSpeed, zRotation);
 
 }
 
@@ -93,9 +93,9 @@ void drivetrain::Center(double angleXOff) {
   double kP = shootAdjustmentkP; // for proportional centering movement to be implemented later
 
   if (angleXOff > 0) {
-    MecanumDrive(0, drivetrainCenteringSpeed, 0);
+    MecanumDrive(0, 0, drivetrainCenteringSpeed);
   } else if (angleXOff < 0) {
-    MecanumDrive(0, -drivetrainCenteringSpeed, 0);
+    MecanumDrive(0, 0, -drivetrainCenteringSpeed);
   } else {
     MecanumDrive(0, 0, 0);
   }

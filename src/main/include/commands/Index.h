@@ -29,5 +29,5 @@ class Index
 
  private:
   indexer* m_indexer;
-  const indexer::IndexerDirection& m_direction;
+  const indexer::IndexerDirection m_direction;
 };

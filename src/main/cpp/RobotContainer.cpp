@@ -7,17 +7,15 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
                                                 &m_shooter,
                                                 &m_indexer) {
   // Initialize all of your commands and subsystems here INVESTIGATE
-  bool condition;
-  frc2::Trigger exampleTrigger([&condition] {return condition;});
 
   // Configure the button bindings
   ConfigureButtonBindings();
 
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controllerMain.GetLeftX(); },
-    [this] { return m_controllerMain.GetLeftY(); },
-    [this] { return m_controllerMain.GetRightX(); }));
+    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftX); },
+    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftY); },
+    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightX); }));
 
   m_harvester.SetDefaultCommand(Harvester(
     &m_harvester, harvester::HarvesterDirection::kOff
@@ -27,30 +25,30 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
     &m_climber, climber::ClimbDirection::kDown
   ));
 
-  m_indexer.SetDefaultCommand(Index(
-    &m_indexer, indexer::IndexerDirection::kOff
-  ));
+  //m_indexer.SetDefaultCommand(Index(
+    //&m_indexer, indexer::IndexerDirection::kOff
+  //));
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhileActiveContinous(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhenHeld(
     Harvester(&m_harvester, harvester::HarvesterDirection::kForward)); 
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhileActiveContinous(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhenHeld(
     Harvester(&m_harvester, harvester::HarvesterDirection::kReverse));
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhileActiveContinous(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhenHeld(
     Index(&m_indexer, indexer::IndexerDirection::kForward));
   
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhileActiveContinous(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhenHeld(
     Index(&m_indexer, indexer::IndexerDirection::kReverse));
 
-  frc2::Trigger leftTrigger ([this] {return m_controllerMain.GetLeftTriggerAxis() >= 0.75;});
+  frc2::Trigger leftTrigger ([this] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftTrigger) >= 0.75;});
   leftTrigger.WhileActiveContinous(ShootLow(&m_shooter));
 
-  frc2::Trigger rightTrigger ([this] {return m_controllerMain.GetRightTriggerAxis() >= 0.75;});
+  frc2::Trigger rightTrigger ([this] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightTrigger) >= 0.75;});
   rightTrigger.WhileActiveContinous(ShootHigh(&m_shooter, &m_drivetrain));
 
 

@@ -30,7 +30,7 @@ namespace drivetrainConstants {
     constexpr int motorFrontLeft = 2;
     constexpr int motorRearLeft = 3;
 
-    constexpr double motorMaxOutput = 1;
+    constexpr double motorMaxOutput = 0.5;
     constexpr double motorDeadband = 0.05;
 
     constexpr double driveScalingCoefficient = 0.8;
@@ -47,7 +47,7 @@ namespace drivetrainConstants {
     constexpr bool driveMotorSaftey = false;
 
     constexpr double shootAdjustmentkP = 0.1;
-    constexpr double drivetrainCenteringSpeed = 0.25;
+    constexpr double drivetrainCenteringSpeed = 0.2;
 
     constexpr double wheelDiameterMeters = 0.2032;
     constexpr double falconCountsPerRevolution = 2048;
@@ -79,11 +79,11 @@ namespace indexerConstants {
     //CAN ID
     constexpr int motorIndexer = 5;
 
-    constexpr double motorMaxOutput = 0.2;
+    constexpr double motorMaxOutput = 1;
 
     constexpr bool indexerInverted = false;
     constexpr double satVoltage = 10;
-    constexpr bool voltageComp = true;
+    constexpr bool voltageComp = false;
 
 }
 
@@ -99,18 +99,20 @@ namespace shooterConstants {
 
     constexpr double shootLowSpeed = 0;
 
-    constexpr double shooterkP = 3.4757E-08;
+    constexpr double shooterkP = 6.2811E-05;
     constexpr double shooterkI = 0;
     constexpr double shooterkD = 0;
-    constexpr double shooterFF = 0;
+    constexpr double shooterFF = 0.00000481;
 
     constexpr double maxDistanceFromTargetIn = 10000000;
     constexpr double minDistanceFromTargetIn = 0;
-    constexpr double maxAimDeviationDEG = 1;
+    constexpr double maxAimDeviationDEG = 0.5;
 
-    constexpr double targetHeightIn = 0;
-    constexpr double limelightHeightIn = 0;
-    constexpr double limelightAngleDEG = 0;
+    constexpr double targetHeightIn = 101;
+    constexpr double limelightHeightIn = 31.5;
+    constexpr double limelightAngleDEG = 35;
+
+    constexpr double shooterInverted = true;
 
 
 

@@ -52,6 +52,6 @@ class RobotContainer {
 
  // bool TriggerPressed(bool right, bool driveController);
 
-  frc::XboxController m_controllerMain{controllerMain};
-  frc::XboxController m_controllerAux{controllerAux};
+  frc::Joystick m_controllerMain{controllerMain};
+  frc::Joystick m_controllerAux{controllerAux};
 };

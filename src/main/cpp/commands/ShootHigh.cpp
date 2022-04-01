@@ -14,7 +14,7 @@ void ShootHigh::Initialize() {
 
 void ShootHigh::Execute() {
 
-    if (maxAimDeviationDEG < m_shooter->GetError()) {
+    if (maxAimDeviationDEG < abs(m_shooter->GetError())) {
         m_drivetrain->Center(m_shooter->GetError());
     } else if (m_shooter->Goldilocks()) {
         m_shooter->RunShooter(shooter::ShooterBehavior::kHigh);

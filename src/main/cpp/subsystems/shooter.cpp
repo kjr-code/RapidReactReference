@@ -2,22 +2,27 @@
 
 shooter::shooter() {
   // Implementation of subsystem constructor goes here.
-  m_motorShooter.EnableVoltageCompensation(nominalVoltage);
   m_PIDShooter.SetP(shooterkP);
   m_PIDShooter.SetI(shooterkI);
   m_PIDShooter.SetD(shooterkD);
   m_PIDShooter.SetFF(shooterFF); 
+  m_motorShooter.SetInverted(shooterInverted);
+  frc::SmartDashboard::PutNumber("ShootLowSpeed", lowSpeedBase);
+  frc::SmartDashboard::PutNumber("ShootHighSpeed", highSpeedBase);
 }
 
 void shooter::RunShooter(const ShooterBehavior& behavior) {
+  int speed = 0;
   switch(behavior) {
     case ShooterBehavior::kHigh :
-      m_PIDShooter.SetReference(frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase), 
+      speed = frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase);
+      m_PIDShooter.SetReference(speed, 
                                 rev::CANSparkMax::ControlType::kVelocity);
       //ShootHigh();
       break;
     case ShooterBehavior::kLow :
-      m_PIDShooter.SetReference(frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase), 
+      speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
+      m_PIDShooter.SetReference(speed, 
                                 rev::CANSparkMax::ControlType::kVelocity);
       //m_motorShooter.Set(shootLowSpeed);
       break;
@@ -69,7 +74,7 @@ void shooter::Periodic() {
   tx = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);
   ty = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);
 
-  frc::SmartDashboard::PutNumber("Distance From Target Inches", m_distanceToTargetIn);
+  frc::SmartDashboard::PutNumber("Distance From Target Inches", DistanceToTargetIn());
   frc::SmartDashboard::PutNumber("Calculated RPM", m_RPM);
 }
 
