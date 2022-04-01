@@ -6,6 +6,7 @@ shooter::shooter() {
   m_PIDShooter.SetI(shooterkI);
   m_PIDShooter.SetD(shooterkD);
   m_PIDShooter.SetFF(shooterFF); 
+  m_PIDShooter.SetOutputRange(-1, 1);
   m_motorShooter.SetInverted(shooterInverted);
   frc::SmartDashboard::PutNumber("ShootLowSpeed", lowSpeedBase);
   frc::SmartDashboard::PutNumber("ShootHighSpeed", highSpeedBase);

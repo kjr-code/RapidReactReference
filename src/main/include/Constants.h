@@ -54,9 +54,9 @@ namespace drivetrainConstants {
     constexpr double falconDistancePerPulse = (wheelDiameterMeters * wpi::numbers::pi) / falconCountsPerRevolution;
     constexpr double trackWidth = 0;
 
-    constexpr auto ks = 0_V;
-    constexpr auto kv = 0 * 1_V * 1_s / 1_m;
-    constexpr auto ka = 0 * 1_V * 1_s * 1_s / 1_m;
+    constexpr auto driveks = 0_V;
+    constexpr auto drivekv = 0 * 1_V * 1_s / 1_m;
+    constexpr auto driveka = 0 * 1_V * 1_s * 1_s / 1_m;
 
 }
 
@@ -99,10 +99,10 @@ namespace shooterConstants {
 
     constexpr double shootLowSpeed = 0;
 
-    constexpr double shooterkP = 6.2811E-05;
+    constexpr double shooterkP = 6.2811E-05; //suggested by sysID tool
     constexpr double shooterkI = 0;
     constexpr double shooterkD = 0;
-    constexpr double shooterFF = 0.00000481;
+    constexpr double shooterFF = 1/5676; //pid max output divided by free speed
 
     constexpr double maxDistanceFromTargetIn = 10000000;
     constexpr double minDistanceFromTargetIn = 0;
@@ -111,6 +111,10 @@ namespace shooterConstants {
     constexpr double targetHeightIn = 101;
     constexpr double limelightHeightIn = 31.5;
     constexpr double limelightAngleDEG = 35;
+    
+    constexpr auto shootks = 0_V;
+    constexpr auto shootkv = 0 * 1_V * 1_s / 1_m;
+    constexpr auto shootka = 0 * 1_V * 1_s * 1_s / 1_m;
 
     constexpr double shooterInverted = true;
 

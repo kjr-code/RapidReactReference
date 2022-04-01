@@ -7,6 +7,8 @@
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/controller/SimpleMotorFeedForward.h>
+#include <units/angular_velocity.h>
+#include <units/angular_acceleration.h>
 
 #include "Constants.h"
 
@@ -46,7 +48,6 @@ class shooter : public frc2::SubsystemBase {
  private:
   rev::CANSparkMax m_motorShooter{shooterConstants::motorShooter, rev::CANSparkMax::MotorType::kBrushless};
   rev::SparkMaxPIDController m_PIDShooter{m_motorShooter.GetPIDController()};
-
   
   double tx{0}, ty{0};
   double m_targetHeight{targetHeightIn},
