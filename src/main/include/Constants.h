@@ -47,7 +47,7 @@ namespace drivetrainConstants {
     constexpr bool driveMotorSaftey = false;
 
     constexpr double shootAdjustmentkP = 0.1;
-    constexpr double drivetrainCenteringSpeed = 0.05;
+    constexpr double drivetrainCenteringSpeed = 0.1;
 
     constexpr double wheelDiameterMeters = 0.2032;
     constexpr double falconCountsPerRevolution = 2048;

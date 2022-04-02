@@ -2,8 +2,12 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <cameraserver/CameraServer.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+  frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+  frc::CameraServer::GetInstance()->StartAutomaticCapture(1);
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use

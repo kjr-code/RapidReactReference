@@ -56,5 +56,5 @@ class shooter : public frc2::SubsystemBase {
           m_targetAngle{0},
           m_distanceToTargetIn{0},
           m_totalAngleToTargetRAD{0},
-          m_RPM{0};
+          m_voltage{0};
 };

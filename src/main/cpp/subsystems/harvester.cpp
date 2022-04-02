@@ -20,7 +20,7 @@ void harvester::RunHarvester(const HarvesterDirection& direction) {
       m_motorHarvester.Set(0);
       break;
     default :
-      //MoveHarvester(PneumaticsDirection::kIn);
+      // MoveHarvester(PneumaticsDirection::kIn);
       m_motorHarvester.Set(0);
       break;
       

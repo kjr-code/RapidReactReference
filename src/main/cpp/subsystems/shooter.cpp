@@ -23,8 +23,8 @@ void shooter::RunShooter(const ShooterBehavior& behavior) {
       speed = frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase);
       //m_PIDShooter.SetReference(speed, 
                                 //rev::CANSparkMax::ControlType::kVelocity);
-      m_motorShooter.SetVoltage(units::volt_t(speed));
-      //ShootHigh();
+      //m_motorShooter.SetVoltage(units::volt_t(speed));
+      ShootHigh();
       break;
     case ShooterBehavior::kLow :
       speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
@@ -45,9 +45,13 @@ void shooter::RunShooter(const ShooterBehavior& behavior) {
 void shooter::ShootHigh() {
   m_distanceToTargetIn = DistanceToTargetIn();
 
-  m_RPM = 0; // need to use a spreadsheet to calculate shoot function based on distance and add that function here
+  m_voltage = 0.426*std::pow(m_distanceToTargetIn, 0.5039); // need to use a spreadsheet to calculate shoot function based on distance and add that function here
 
-  m_PIDShooter.SetReference(m_RPM, rev::CANSparkMax::ControlType::kVelocity);
+  if (m_voltage < 10) {
+    //m_PIDShooter.SetReference(m_RPM, rev::CANSparkMax::ControlType::kVelocity);
+    m_motorShooter.SetVoltage(units::volt_t(m_voltage)); 
+  }
+  
 }
 
 double shooter::DistanceToTargetIn() {
@@ -83,7 +87,7 @@ void shooter::Periodic() {
   ty = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);
 
   frc::SmartDashboard::PutNumber("Distance From Target Inches", DistanceToTargetIn());
-  frc::SmartDashboard::PutNumber("Calculated RPM", m_RPM);
+  frc::SmartDashboard::PutNumber("Calculated voltage", m_voltage);
   frc::SmartDashboard::PutNumber("currentRPM", m_encoder.GetVelocity());
   m_PIDShooter.SetFF(frc::SmartDashboard::GetNumber("FF Gain", shooterFF));
   m_PIDShooter.SetP(frc::SmartDashboard::GetNumber("P Gain", shooterkP));
