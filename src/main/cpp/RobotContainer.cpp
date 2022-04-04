@@ -8,6 +8,8 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
                                                 &m_indexer) {
   // Initialize all of your commands and subsystems here INVESTIGATE
 
+  const frc::TrapezoidProfile<units::radians>::Constraints kThetaControllerConstraints{maxAngularSpeed, maxAngularAcceleration};
+
   // Configure the button bindings
   ConfigureButtonBindings();
 
@@ -86,6 +88,66 @@ bool RobotContainer::TriggerPressed(bool right, bool driveController) {
 }
 */
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+  // Set up config for trajectory
+  frc::TrajectoryConfig config(autoMaxSpeed,
+                               autoMaxAcceleration);
+  // Add kinematics to ensure max speed is actually obeyed
+  config.SetKinematics(m_kinematics);
+
+  // An example trajectory to follow.  All units in meters.
+  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+      // Start at the origin facing the +X direction
+      frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+      // Pass through these two interior waypoints, making an 's' curve path
+      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
+      // End 3 meters straight ahead of where we started, facing forward
+      frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+      // Pass the config
+      config);
+
+  frc2::MecanumControllerCommand mecanumControllerCommand(
+      exampleTrajectory, [this]() { return m_drivetrain.GetPose(); },
+
+      frc::SimpleMotorFeedforward<units::meters>(driveks, drivekv, driveka),
+      m_kinematics,
+
+      frc2::PIDController(kPXController, 0, 0),
+      frc2::PIDController(kPYController, 0, 0),
+      frc::ProfiledPIDController<units::radians>(
+          kPThetaController, 0, 0,
+          frc::TrapezoidProfile<units::radians>::Constraints(maxAngularSpeed, maxAngularAcceleration)),
+
+      autoMaxSpeed,
+
+      [this]() {
+        return frc::MecanumDriveWheelSpeeds{
+            units::meters_per_second_t(m_drivetrain.GetVelocity(drivetrain::MotorLocation::kFL)),
+            units::meters_per_second_t(m_drivetrain.GetVelocity(drivetrain::MotorLocation::kFR)),
+            units::meters_per_second_t(m_drivetrain.GetVelocity(drivetrain::MotorLocation::kBL)),
+            units::meters_per_second_t(m_drivetrain.GetVelocity(drivetrain::MotorLocation::kBR))};
+      },
+
+      frc2::PIDController(kPFrontLeftVel, 0, 0),
+      frc2::PIDController(kPRearLeftVel, 0, 0),
+      frc2::PIDController(kPFrontRightVel, 0, 0),
+      frc2::PIDController(kPRearRightVel, 0, 0),
+
+      [this](units::volt_t frontLeft, units::volt_t rearLeft,
+             units::volt_t frontRight, units::volt_t rearRight) {
+        m_drivetrain.SetDriveMotorVoltage(frontLeft, rearLeft, frontRight, rearRight);
+      },
+
+      {&m_drivetrain});
   // An example command will be run in autonomous
-  return &m_Autonomous;
+  m_drivetrain.ResetOdometry(exampleTrajectory.InitialPose());
+
+  // no auto
+  return new frc2::SequentialCommandGroup(
+    frc2::ParallelRaceGroup(
+      std::move(mecanumControllerCommand),
+      Harvester(&m_harvester, harvester::HarvesterDirection::kForward)),
+    frc2::ParallelCommandGroup(
+      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {}),
+      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {}))
+    );
 }

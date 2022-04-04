@@ -22,8 +22,21 @@
 
 #include <frc/Joystick.h>
 #include <frc/XboxController.h>
+#include <frc/controller/ProfiledPIDController.h>
+#include <frc/controller/PIDController.h>
+#include <frc2/command/MecanumControllerCommand.h>
+#include <frc/trajectory/Trajectory.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/ParallelDeadlineGroup.h>
+#include <frc2/command/ParallelCommandGroup.h>
 
 using namespace controllerConstants;
+using namespace drivetrainConstants;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since

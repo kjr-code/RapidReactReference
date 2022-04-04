@@ -1,9 +1,18 @@
 #pragma once
 
 #include <wpi/numbers>
-#include <units/voltage.h>
-#include <units/time.h>
+#include <frc/geometry/Translation2d.h>
+#include <frc/trajectory/TrapezoidProfile.h>
+#include <frc/controller/ProfiledPIDController.h>
+#include <frc/kinematics/MecanumDriveKinematics.h>
+#include <units/acceleration.h>
+#include <units/angle.h>
+#include <units/angular_velocity.h>
 #include <units/length.h>
+#include <units/time.h>
+#include <units/velocity.h>
+#include <units/voltage.h>
+#include <wpi/numbers>
 
 /**
  * This header contains hold robot-wide numerical or boolean constants ONLY.
@@ -12,111 +21,133 @@
  * header, which can then be included (where they are needed).
  */
 
-constexpr int PLACEHOLDER_INT = 0;
+const int PLACEHOLDER_INT = 0;
 
 namespace controllerConstants {
 
     //USB port addresses on drivestation PC.
-    constexpr int controllerMain = 0;
-    constexpr int controllerAux = 1;
+    const int controllerMain = 0;
+    const int controllerAux = 1;
 
 }
 
 namespace drivetrainConstants {
+    using radians_per_second_squared_t = units::compound_unit<units::radians,
+                                                                units::inverse<units::squared<units::second>>>;
 
     //CAN IDs
-    constexpr int motorFrontRight = 0;
-    constexpr int motorRearRight = 1;
-    constexpr int motorFrontLeft = 2;
-    constexpr int motorRearLeft = 3;
+    const int motorFrontRight = 0;
+    const int motorRearRight = 1;
+    const int motorFrontLeft = 2;
+    const int motorRearLeft = 3;
 
-    constexpr double motorMaxOutput = 0.5;
-    constexpr double motorDeadband = 0.05;
+    const double motorMaxOutput = 0.5;
+    const double motorDeadband = 0.05;
 
-    constexpr double driveScalingCoefficient = 0.6;
+    const double driveScalingCoefficient = 0.6;
 
-    constexpr bool fieldOriented = false;
+    const bool fieldOriented = false;
 
-    constexpr double xRateLimit = 1;
-    constexpr double yRateLimit = 1;
-    constexpr double zRateLimit = 1;
+    const double xRateLimit = 1;
+    const double yRateLimit = 1;
+    const double zRateLimit = 1;
 
-    constexpr bool voltageComp = true;
-    constexpr double satVoltage = 10;
+    const bool voltageComp = true;
+    const double satVoltage = 10;
 
-    constexpr bool driveMotorSaftey = false;
+    const bool driveMotorSaftey = false;
 
-    constexpr double shootAdjustmentkP = 0.1;
-    constexpr double drivetrainCenteringSpeed = 0.1;
+    const double shootAdjustmentkP = 0.1;
+    const double drivetrainCenteringSpeed = 0.1;
 
-    constexpr double wheelDiameterMeters = 0.2032;
-    constexpr double falconCountsPerRevolution = 2048;
-    constexpr double falconDistancePerPulse = (wheelDiameterMeters * wpi::numbers::pi) / falconCountsPerRevolution;
-    constexpr double trackWidth = 0;
+    const double wheelDiameterMeters = 0.2032;
+    const double falconCountsPerRevolution = 2048;
+    const double falconDistancePerPulse = (wheelDiameterMeters * wpi::numbers::pi) / falconCountsPerRevolution;
 
-    constexpr auto driveks = 0_V;
-    constexpr auto drivekv = 0 * 1_V * 1_s / 1_m;
-    constexpr auto driveka = 0 * 1_V * 1_s * 1_s / 1_m;
+    const units::inch_t wheelBase = 0_in;
+    const units::inch_t trackWidth = 0_in;
+    const frc::MecanumDriveKinematics m_kinematics{frc::Translation2d(wheelBase / 2, trackWidth / 2),
+                                            frc::Translation2d(wheelBase / 2, -trackWidth / 2),
+                                            frc::Translation2d(-wheelBase / 2, trackWidth / 2),
+                                            frc::Translation2d(-wheelBase / 2, -trackWidth / 2)};
+    const auto autoMaxSpeed = units::meters_per_second_t(3);
+    const auto autoMaxAcceleration = units::meters_per_second_squared_t(3);
+constexpr auto maxAngularSpeed = units::radians_per_second_t(3);
+constexpr auto maxAngularAcceleration = units::unit_t<radians_per_second_squared_t>(3);
+
+    const auto driveks = 0_V;
+    const auto drivekv = 0 * 1_V * 1_s / 1_m;
+    const auto driveka = 0 * 1_V * 1_s * 1_s / 1_m;
+
+    const double kPXController = 0;
+    const double kPYController = 0;
+    const double kPThetaController = 0;
+    extern const frc::TrapezoidProfile<units::radians>::Constraints kThetaControllerConstraints;
+
+    const double kPFrontLeftVel = 0.5;
+    const double kPFrontRightVel = 0.5;
+    const double kPRearLeftVel = 0.5;
+    const double kPRearRightVel = 0.5;
 
 }
 
 namespace harvesterConstants {
 
     //CAN ID
-    constexpr int PHID = 8;
-    constexpr int motorHarvester = 4;
+    const int PHID = 8;
+    const int motorHarvester = 4;
 
-    constexpr double motorMaxOutput = 0.5;
+    const double motorMaxOutput = 0.5;
 
     //Solenoid Ports
-    constexpr int solenoidForward = 4;
-    constexpr int solenoidReverse = 6;
+    const int solenoidForward = 4;
+    const int solenoidReverse = 6;
 
 }
 
 namespace indexerConstants {
 
     //CAN ID
-    constexpr int motorIndexer = 5;
+    const int motorIndexer = 5;
 
-    constexpr double motorMaxOutput = 1;
+    const double motorMaxOutput = 1;
 
-    constexpr bool indexerInverted = false;
-    constexpr double satVoltage = 10;
-    constexpr bool voltageComp = false;
+    const bool indexerInverted = false;
+    const double satVoltage = 10;
+    const bool voltageComp = false;
 
 }
 
 namespace shooterConstants {
 
     //CAN ID
-    constexpr int motorShooter = 7;
+    const int motorShooter = 7;
 
-    constexpr double nominalVoltage = 11;
+    const double nominalVoltage = 11;
 
-    constexpr double lowSpeedBase = 5; //base values are for testing purposes with smart dashboard
-    constexpr double highSpeedBase = 7;
+    const double lowSpeedBase = 5; //base values are for testing purposes with smart dashboard
+    const double highSpeedBase = 7;
 
-    constexpr double shootLowSpeed = 0;
+    const double shootLowSpeed = 0;
 
-    constexpr double shooterkP = 5.2183E-05; //suggested by sysID tool
-    constexpr double shooterkI = 0;
-    constexpr double shooterkD = 0;
-    constexpr double shooterFF = 0; //pid max output divided by free speed
+    const double shooterkP = 5.2183E-05; //suggested by sysID tool
+    const double shooterkI = 0;
+    const double shooterkD = 0;
+    const double shooterFF = 0; //pid max output divided by free speed
 
-    constexpr double maxDistanceFromTargetIn = 10000000;
-    constexpr double minDistanceFromTargetIn = 0;
-    constexpr double maxAimDeviationDEG = 2;
+    const double maxDistanceFromTargetIn = 10000000;
+    const double minDistanceFromTargetIn = 0;
+    const double maxAimDeviationDEG = 2;
 
-    constexpr double targetHeightIn = 101;
-    constexpr double limelightHeightIn = 31.5;
-    constexpr double limelightAngleDEG = 35;
+    const double targetHeightIn = 101;
+    const double limelightHeightIn = 31.5;
+    const double limelightAngleDEG = 35;
     
-    constexpr auto shootks = 0_V;
-    constexpr auto shootkv = 0 * 1_V * 1_s / 1_m;
-    constexpr auto shootka = 0 * 1_V * 1_s * 1_s / 1_m;
+    const auto shootks = 0_V;
+    const auto shootkv = 0 * 1_V * 1_s / 1_m;
+    const auto shootka = 0 * 1_V * 1_s * 1_s / 1_m;
 
-    constexpr double shooterInverted = true;
+    const double shooterInverted = true;
 
 
 
@@ -125,12 +156,12 @@ namespace shooterConstants {
 namespace climberConstants {
 
     //CAN ID
-    constexpr int PHID = 8;
+    const int PHID = 8;
 
     //Solenoid Ports
-    constexpr int solenoidForwardLeft = 2;
-    constexpr int solenoidReverseLeft = 3;
-    constexpr int solenoidForwardRight = 0;
-    constexpr int solenoidReverseRight = 5;
+    const int solenoidForwardLeft = 2;
+    const int solenoidReverseLeft = 3;
+    const int solenoidForwardRight = 0;
+    const int solenoidReverseRight = 5;
 
 }

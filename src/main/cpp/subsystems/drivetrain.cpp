@@ -126,38 +126,52 @@ void drivetrain::ZeroGyroYaw() {
   m_gyro.ZeroYaw();
 }
 
+void drivetrain::Turn(double degrees) {
+}
+
 void drivetrain::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(m_gyro.GetRotation2d(),
-                    units::meter_t(GetEncoderDistance(true)),
-                    units::meter_t(GetEncoderDistance(false)));
-  m_differentialDrive.Feed();
-  m_differentialDrive.FeedWatchdog();
+  m_odometry.Update(m_gyro.GetRotation2d(), 
+                    frc::MecanumDriveWheelSpeeds{
+          units::meters_per_second_t(m_motorFrontLeft.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse),
+          units::meters_per_second_t(m_motorFrontRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse),
+          units::meters_per_second_t(m_motorRearLeft.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse),
+          units::meters_per_second_t(m_motorRearRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse)});
 }
 
-void drivetrain::TankDriveVolts(double left, double right) {
-  m_leftMotors.SetVoltage(units::volt_t(left));
-  m_rightMotors.SetVoltage(units::volt_t(right));
+frc::Pose2d drivetrain::GetPose() {
+  return m_odometry.GetPose();
 }
 
-double drivetrain::GetEncoderDistance(bool left) {
-  double distance;
-  if (left) {
-    distance = 0.5 * (m_motorFrontLeft.GetSelectedSensorPosition() + m_motorRearLeft.GetSelectedSensorPosition()) * falconDistancePerPulse;
-  } else {
-    distance = 0.5 * (m_motorFrontRight.GetSelectedSensorPosition() + m_motorRearRight.GetSelectedSensorPosition()) * falconDistancePerPulse;
+void drivetrain::SetDriveMotorVoltage(units::volt_t FL, units::volt_t BL, units::volt_t FR, units::volt_t BR) {
+  m_motorFrontLeft.SetVoltage(FL);
+  m_motorRearLeft.SetVoltage(BL);
+  m_motorFrontRight.SetVoltage(FR);
+  m_motorRearRight.SetVoltage(BR);
+}
+
+double drivetrain::GetVelocity(drivetrain::MotorLocation motor) {
+  switch (motor) {
+    case (drivetrain::MotorLocation::kFL) : {
+      return m_motorFrontLeft.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse;
+    }
+    case (drivetrain::MotorLocation::kBL) : {
+      return m_motorRearLeft.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse;
+    }
+    case (drivetrain::MotorLocation::kFR) : {
+      return m_motorFrontRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse;
+    }
+    case (drivetrain::MotorLocation::kBR) : {
+      return m_motorRearRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse;
+    }
+    default : {
+      return 0;
+    }
   }
-  return distance;
 }
 
-double drivetrain::GetEncoderRate(bool left) {
-  double rate;
-  if (left) {
-    rate = (0.5 * (m_motorFrontLeft.GetSelectedSensorVelocity() + m_motorRearLeft.GetSelectedSensorVelocity()) * 10) * falconDistancePerPulse;
-  } else {
-    rate = (0.5 * (m_motorFrontLeft.GetSelectedSensorVelocity() + m_motorRearLeft.GetSelectedSensorVelocity()) * 10) * falconDistancePerPulse;
-  }
-  return rate;
+void drivetrain::ResetOdometry(frc::Pose2d pose) {
+  m_odometry.ResetPosition(pose, m_gyro.GetRotation2d());
 }
 
 void drivetrain::SimulationPeriodic() {

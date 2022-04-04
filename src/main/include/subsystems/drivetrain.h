@@ -8,10 +8,9 @@
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/motorcontrol/MotorControllerGroup.h>
 #include <frc/filter/SlewRateLimiter.h>
-#include <frc/kinematics/DifferentialDriveKinematics.h>
-#include <frc/kinematics/DifferentialDriveOdometry.h>
-#include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
-#include <frc/controller/RamseteController.h>
+#include <frc/kinematics/MecanumDriveKinematics.h>
+#include <frc/kinematics/MecanumDriveOdometry.h>
+#include <frc/kinematics/MecanumDriveWheelSpeeds.h>
 #include <frc/controller/SimpleMotorFeedforward.h>
 #include <math.h>
 
@@ -37,11 +36,10 @@ class drivetrain : public frc2::SubsystemBase {
 
   void MecanumDrive(double x, double y, double z);
 
-  void TankDriveVolts(double left, double right);
-
-  double GetEncoderDistance(bool left);
-
-  double GetEncoderRate(bool left);
+  void SetDriveMotorVoltage(units::volt_t FL,
+                            units::volt_t BL,
+                            units::volt_t FR,
+                            units::volt_t BR);
 
   void ZeroDriveEncoders();
 
@@ -49,12 +47,21 @@ class drivetrain : public frc2::SubsystemBase {
 
   void ZeroGyroYaw();
 
+  void Turn(double degrees);
+
   void Center(double angleXOff);
+
+  enum class MotorLocation {kFL, kBL, kFR, kBR};
+  double GetVelocity(drivetrain::MotorLocation motor);
+
+  void ResetOdometry(frc::Pose2d initialPose);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+
+  frc::Pose2d GetPose();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs during
@@ -71,22 +78,20 @@ class drivetrain : public frc2::SubsystemBase {
   WPI_TalonFX m_motorRearLeft{motorRearLeft};
   WPI_TalonFX m_motorRearRight{motorRearRight};
 
-  frc::MotorControllerGroup m_leftMotors{m_motorFrontLeft, m_motorFrontRight};
-  frc::MotorControllerGroup m_rightMotors{m_motorFrontRight, m_motorRearRight};
-
   TalonFXConfiguration m_talonFXConfiguration{};
 
-  frc::DifferentialDrive m_differentialDrive{m_leftMotors, m_rightMotors};
-
-  frc::DifferentialDriveOdometry m_odometry{frc::Rotation2d(0_deg),
-                                            frc::Pose2d(frc::Translation2d(0_m, 0_m),
-                                                        frc::Rotation2d(0_deg))};
+  frc::MecanumDriveOdometry m_odometry{m_kinematics,
+                                      frc::Rotation2d(0_deg),
+                                      frc::Pose2d(frc::Translation2d(0_m, 0_m),
+                                                  frc::Rotation2d(0_deg))};
 
   //frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};
   double m_adjYaw{0};
+
+  
 
   //frc::SlewRateLimiter<double()> m_xRateLimiter{xRateLimit/1_s};
   //frc::SlewRateLimiter<double()> m_yRateLimiter{yRateLimit/1_s};
