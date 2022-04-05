@@ -47,10 +47,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhenHeld(
     Index(&m_indexer, indexer::IndexerDirection::kReverse));
 
-  frc2::Trigger leftTrigger ([this] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftTrigger) >= 0.75;});
+  frc2::Trigger leftTrigger ([&] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftTrigger) >= 0.75;});
   leftTrigger.WhileActiveContinous(ShootLow(&m_shooter));
 
-  frc2::Trigger rightTrigger ([this] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightTrigger) >= 0.75;});
+  frc2::Trigger rightTrigger ([&] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightTrigger) >= 0.75;});
   rightTrigger.WhileActiveContinous(ShootHigh(&m_shooter, &m_drivetrain));
 
 
@@ -116,7 +116,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc::ProfiledPIDController<units::radians>(
           kPThetaController, 0, 0,
           frc::TrapezoidProfile<units::radians>::Constraints(maxAngularSpeed, maxAngularAcceleration)),
-
+  
       autoMaxSpeed,
 
       [this]() {
@@ -141,13 +141,19 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
   m_drivetrain.ResetOdometry(exampleTrajectory.InitialPose());
 
-  // no auto
+  // no auto 
+  /*
   return new frc2::SequentialCommandGroup(
     frc2::ParallelRaceGroup(
-      std::move(mecanumControllerCommand),
-      Harvester(&m_harvester, harvester::HarvesterDirection::kForward)),
+      std::move(mecanumControllerCommand)
+      //Harvester(&m_harvester, harvester::HarvesterDirection::kForward)
+      ),
     frc2::ParallelCommandGroup(
-      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {}),
-      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {}))
-    );
+      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {})
+      //frc2::InstantCommand([this]() { m_harvester.RunHarvester(harvester::HarvesterDirection::kOff); }, {}))
+    ));
+*/
+  return new frc2::SequentialCommandGroup(
+    std::move(mecanumControllerCommand),
+    frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0);}, {}));
 }

@@ -52,7 +52,7 @@ namespace drivetrainConstants {
     const double yRateLimit = 1;
     const double zRateLimit = 1;
 
-    const bool voltageComp = true;
+    const bool voltageComp = false;
     const double satVoltage = 10;
 
     const bool driveMotorSaftey = false;
@@ -72,16 +72,16 @@ namespace drivetrainConstants {
                                             frc::Translation2d(-wheelBase / 2, -trackWidth / 2)};
     const auto autoMaxSpeed = units::meters_per_second_t(3);
     const auto autoMaxAcceleration = units::meters_per_second_squared_t(3);
-constexpr auto maxAngularSpeed = units::radians_per_second_t(3);
-constexpr auto maxAngularAcceleration = units::unit_t<radians_per_second_squared_t>(3);
+    const auto maxAngularSpeed = units::radians_per_second_t(3);
+    const auto maxAngularAcceleration = units::unit_t<radians_per_second_squared_t>(3);
 
-    const auto driveks = 0_V;
-    const auto drivekv = 0 * 1_V * 1_s / 1_m;
-    const auto driveka = 0 * 1_V * 1_s * 1_s / 1_m;
+    const auto driveks = 0.47417_V;
+    const auto drivekv = 2.2729 * 1_V * 1_s / 1_m;
+    const auto driveka = 0.32865 * 1_V * 1_s * 1_s / 1_m;
 
-    const double kPXController = 0;
-    const double kPYController = 0;
-    const double kPThetaController = 0;
+    const double kPXController = 70.159;
+    const double kPYController = 70.159;
+    const double kPThetaController = 70.159;
     extern const frc::TrapezoidProfile<units::radians>::Constraints kThetaControllerConstraints;
 
     const double kPFrontLeftVel = 0.5;
