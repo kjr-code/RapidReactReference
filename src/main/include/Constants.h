@@ -128,7 +128,7 @@ namespace shooterConstants {
     const double lowSpeedBase = 5; //base values are for testing purposes with smart dashboard
     const double highSpeedBase = 7;
 
-    const double shootLowSpeed = 0;
+    const double shootLowSpeed = 3.5;
 
     const double shooterkP = 5.2183E-05; //suggested by sysID tool
     const double shooterkI = 0;

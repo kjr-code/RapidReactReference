@@ -89,6 +89,7 @@ bool RobotContainer::TriggerPressed(bool right, bool driveController) {
 */
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // Set up config for trajectory
+  /*
   frc::TrajectoryConfig config(autoMaxSpeed,
                                autoMaxAcceleration);
   // Add kinematics to ensure max speed is actually obeyed
@@ -152,8 +153,24 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
       frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0); }, {})
       //frc2::InstantCommand([this]() { m_harvester.RunHarvester(harvester::HarvesterDirection::kOff); }, {}))
     ));
-*/
   return new frc2::SequentialCommandGroup(
     std::move(mecanumControllerCommand),
     frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0);}, {}));
+    */
+
+  return new frc2::SequentialCommandGroup (
+    frc2::ParallelDeadlineGroup(
+      Timer(units::second_t(3)),
+      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0.2, 0, 0);}, {})
+    ),
+    frc2::ParallelDeadlineGroup(
+      Timer(units::second_t(7)),
+      ShootHigh(&m_shooter, &m_drivetrain),
+      frc2::SequentialCommandGroup (
+        Timer(units::second_t(1.5)),
+        frc2::InstantCommand([this]() { m_indexer.RunIndexer(indexer::IndexerDirection::kForward);}, {})
+      )
+    ),
+    frc2::InstantCommand([this]() { m_indexer.RunIndexer(indexer::IndexerDirection::kOff);}, {})
+  );
 }

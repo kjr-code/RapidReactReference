@@ -8,12 +8,12 @@ shooter::shooter() {
   m_PIDShooter.SetFF(shooterFF); 
   m_PIDShooter.SetOutputRange(-1, 1);
   m_motorShooter.SetInverted(shooterInverted);
-  frc::SmartDashboard::PutNumber("ShootLowSpeed", lowSpeedBase);
-  frc::SmartDashboard::PutNumber("ShootHighSpeed", highSpeedBase);
-  frc::SmartDashboard::PutNumber("FF gain", shooterFF);
-  frc::SmartDashboard::PutNumber("P Gain", shooterkP);
-  frc::SmartDashboard::PutNumber("I Gain", shooterkI);
-  frc::SmartDashboard::PutNumber("D Gain", shooterkD);
+  //frc::SmartDashboard::PutNumber("ShootLowSpeed", lowSpeedBase);
+  //frc::SmartDashboard::PutNumber("ShootHighSpeed", highSpeedBase);
+  //frc::SmartDashboard::PutNumber("FF gain", shooterFF);
+  //frc::SmartDashboard::PutNumber("P Gain", shooterkP);
+  //frc::SmartDashboard::PutNumber("I Gain", shooterkI);
+  //frc::SmartDashboard::PutNumber("D Gain", shooterkD);
 }
 
 void shooter::RunShooter(const ShooterBehavior& behavior) {
@@ -28,10 +28,10 @@ void shooter::RunShooter(const ShooterBehavior& behavior) {
       break;
     case ShooterBehavior::kLow :
       speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
-      m_motorShooter.SetVoltage(units::volt_t(speed));
+      //m_motorShooter.SetVoltage(units::volt_t(speed));
       //m_PIDShooter.SetReference(speed, 
                                // rev::CANSparkMax::ControlType::kVelocity);
-      //m_motorShooter.Set(shootLowSpeed);
+      m_motorShooter.SetVoltage(units::volt_t(shootLowSpeed));
       break;
     case ShooterBehavior::kOff :
       //m_PIDShooter.SetReference(0, rev::CANSparkMax::ControlType::kVelocity);

@@ -14,6 +14,7 @@
 #include "commands/ShootLow.h"
 #include "commands/Climb.h"
 #include "commands/Index.h"
+#include "commands/Timer.h"
 #include "subsystems/climber.h"
 #include "subsystems/drivetrain.h"
 #include "subsystems/harvester.h"
