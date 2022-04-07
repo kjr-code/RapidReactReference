@@ -2,6 +2,8 @@
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc2/command/SequentialCommandGroup.h>
 
 #include "RobotContainer.h"
 

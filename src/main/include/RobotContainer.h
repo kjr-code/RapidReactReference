@@ -14,7 +14,8 @@
 #include "commands/ShootLow.h"
 #include "commands/Climb.h"
 #include "commands/Index.h"
-#include "commands/Timer.h"
+#include "commands/autonomous/BackupAndShoot.h"
+#include "commands/autonomous/ForwardTurnShoot.h"
 #include "subsystems/climber.h"
 #include "subsystems/drivetrain.h"
 #include "subsystems/harvester.h"
@@ -35,6 +36,8 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/ParallelDeadlineGroup.h>
 #include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/WaitCommand.h>
+#include <frc/smartdashboard/SendableChooser.h>
 
 using namespace controllerConstants;
 using namespace drivetrainConstants;
@@ -61,8 +64,12 @@ class RobotContainer {
   indexer m_indexer;
   
   Autonomous m_Autonomous;
+  BackupAndShoot m_BackupAndShoot;
+  ForwardTurnShoot m_ForwardTurnShoot;
 
   void ConfigureButtonBindings();
+
+  frc::SendableChooser<frc2::SequentialCommandGroup*> m_chooser;
 
  // bool TriggerPressed(bool right, bool driveController);
 

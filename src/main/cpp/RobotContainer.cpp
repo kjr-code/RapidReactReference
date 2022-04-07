@@ -5,7 +5,14 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
                                                 &m_drivetrain,
                                                 &m_harvester,
                                                 &m_shooter,
-                                                &m_indexer) {
+                                                &m_indexer),
+                                    m_BackupAndShoot(&m_drivetrain,
+                                                      &m_shooter,
+                                                      &m_indexer),
+                                    m_ForwardTurnShoot(&m_shooter,
+                                                      &m_drivetrain,
+                                                      &m_harvester,
+                                                      &m_indexer) {
   // Initialize all of your commands and subsystems here INVESTIGATE
 
   const frc::TrapezoidProfile<units::radians>::Constraints kThetaControllerConstraints{maxAngularSpeed, maxAngularAcceleration};
@@ -19,10 +26,6 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
     [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftY); },
     [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightX); }));
 
-  m_harvester.SetDefaultCommand(Harvester(
-    &m_harvester, harvester::HarvesterDirection::kOff
-  ));
-
   m_climber.SetDefaultCommand(Climb(
     &m_climber, climber::ClimbDirection::kDown
   ));
@@ -30,6 +33,7 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
   //m_indexer.SetDefaultCommand(Index(
     //&m_indexer, indexer::IndexerDirection::kOff
   //));
+
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -52,6 +56,10 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::Trigger rightTrigger ([&] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightTrigger) >= 0.75;});
   rightTrigger.WhileActiveContinous(ShootHigh(&m_shooter, &m_drivetrain));
+
+  m_chooser.SetDefaultOption("one ball auto", &m_BackupAndShoot);
+  m_chooser.AddOption("two ball auto", &m_ForwardTurnShoot);
+  frc::SmartDashboard::PutData(&m_chooser);
 
 
   //bool shootHighCondition = TriggerPressed(true, true);
@@ -88,6 +96,7 @@ bool RobotContainer::TriggerPressed(bool right, bool driveController) {
 }
 */
 frc2::Command* RobotContainer::GetAutonomousCommand() {
+
   // Set up config for trajectory
   /*
   frc::TrajectoryConfig config(autoMaxSpeed,
@@ -157,20 +166,5 @@ frc2::Command* RobotContainer::GetAutonomousCommand() {
     std::move(mecanumControllerCommand),
     frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0, 0, 0);}, {}));
     */
-
-  return new frc2::SequentialCommandGroup (
-    frc2::ParallelDeadlineGroup(
-      Timer(units::second_t(3)),
-      frc2::InstantCommand([this]() { m_drivetrain.MecanumDrive(0.2, 0, 0);}, {})
-    ),
-    frc2::ParallelDeadlineGroup(
-      Timer(units::second_t(7)),
-      ShootHigh(&m_shooter, &m_drivetrain),
-      frc2::SequentialCommandGroup (
-        Timer(units::second_t(1.5)),
-        frc2::InstantCommand([this]() { m_indexer.RunIndexer(indexer::IndexerDirection::kForward);}, {})
-      )
-    ),
-    frc2::InstantCommand([this]() { m_indexer.RunIndexer(indexer::IndexerDirection::kOff);}, {})
-  );
+  return m_chooser.GetSelected();
 }
