@@ -22,9 +22,11 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 
   m_drivetrain.SetDefaultCommand(Drive(
     &m_drivetrain,
-    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftX); },
-    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftY); },
-    [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightX); }));
+    [this] { return -m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftX); },
+    [this] { return -m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftY); },
+    [this] { return -m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightX); }));
+    //controller axes were reversed because inputs appeared to be reversed in sim
+    //reverse this change if necessary
 
   //m_climber.SetDefaultCommand(Climb(
     //&m_climber, climber::ClimbDirection::kDown
