@@ -35,8 +35,8 @@ drivetrain::drivetrain() {
 
 
 
-  //m_mecanumDrive.SetDeadband(motorDeadband);
-  //m_mecanumDrive.SetMaxOutput(motorMaxOutput);
+  m_mecanumDrive.SetDeadband(motorDeadband);
+  m_mecanumDrive.SetMaxOutput(motorMaxOutput);
 
   m_gyro.ZeroYaw();
 }
@@ -63,8 +63,8 @@ void drivetrain::MecanumDriveJoystick(double xSpeed, double ySpeed, double zRota
     ySpeed = m_adjYSpeed;
   }
   // Alternate: m_mecanumDrive.DriveCartesian(m_adjXSpeed, m_adjYSpeed, zRotation);
-  // m_mecanumDrive.DriveCartesian(m_adjYSpeed, m_adjXSpeed, zRotation);
-  MecanumDrive(ySpeed*motorMaxOutput, xSpeed*motorMaxOutput, zRotation*motorMaxOutput);
+  m_mecanumDrive.DriveCartesian(ySpeed, xSpeed, zRotation);
+  //MecanumDrive(ySpeed*motorMaxOutput, xSpeed*motorMaxOutput, zRotation*motorMaxOutput);
 
 }
 
@@ -137,6 +137,8 @@ void drivetrain::Periodic() {
           units::meters_per_second_t(m_motorFrontRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse),
           units::meters_per_second_t(m_motorRearLeft.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse),
           units::meters_per_second_t(m_motorRearRight.GetSelectedSensorVelocity() * 10 * falconDistancePerPulse)});
+
+m_mecanumDrive.Feed();
 }
 
 frc::Pose2d drivetrain::GetPose() {

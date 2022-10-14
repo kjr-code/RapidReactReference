@@ -4,6 +4,7 @@ indexer::indexer() {
   // Implementation of subsystem constructor goes here.
   m_motorIndexer.SetInverted(indexerConstants::indexerInverted);
   m_motorIndexer.ConfigVoltageCompSaturation(indexerConstants::satVoltage);
+  m_motorIndexer.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
   m_motorIndexer.EnableVoltageCompensation(indexerConstants::voltageComp);
 }
 

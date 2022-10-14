@@ -41,7 +41,7 @@ namespace drivetrainConstants {
     const int motorFrontLeft = 2;
     const int motorRearLeft = 3;
 
-    const double motorMaxOutput = 0.5;
+    const double motorMaxOutput = 0.75;
     const double motorDeadband = 0.05;
 
     const double driveScalingCoefficient = 0.6;
@@ -52,7 +52,7 @@ namespace drivetrainConstants {
     const double yRateLimit = 1;
     const double zRateLimit = 1;
 
-    const bool voltageComp = false;
+    const bool voltageComp = true;
     const double satVoltage = 10;
 
     const bool driveMotorSaftey = false;
@@ -100,7 +100,7 @@ namespace harvesterConstants {
     const double motorMaxOutput = 0.5;
 
     //Solenoid Ports
-    const int solenoidForward = 4;
+    const int solenoidForward = 5;
     const int solenoidReverse = 6;
 
 }
@@ -128,7 +128,7 @@ namespace shooterConstants {
     const double lowSpeedBase = 5; //base values are for testing purposes with smart dashboard
     const double highSpeedBase = 7;
 
-    const double shootLowSpeed = 3.5;
+    const double shootLowSpeed = 3;
 
     const double shooterkP = 5.2183E-05; //suggested by sysID tool
     const double shooterkI = 0;
@@ -139,7 +139,7 @@ namespace shooterConstants {
     const double minDistanceFromTargetIn = 0;
     const double maxAimDeviationDEG = 2;
 
-    const double targetHeightIn = 101;
+    const double targetHeightIn = 102;
     const double limelightHeightIn = 31.5;
     const double limelightAngleDEG = 35;
     
@@ -159,9 +159,7 @@ namespace climberConstants {
     const int PHID = 8;
 
     //Solenoid Ports
-    const int solenoidForwardLeft = 2;
-    const int solenoidReverseLeft = 3;
-    const int solenoidForwardRight = 0;
-    const int solenoidReverseRight = 5;
+    const int solenoidForward = 7;
+    const int solenoidReverse = 4;
 
 }

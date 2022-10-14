@@ -7,17 +7,14 @@ climber::climber() {
 void climber::RunClimb(const ClimbDirection& direction) {
   switch(direction) {
     case ClimbDirection::kUp :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kForward);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kForward);
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
       break;
     case ClimbDirection::kDown :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kReverse);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kReverse);
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
       break;
     default :
-      m_doubleSolenoidLeft.Set(frc::DoubleSolenoid::Value::kOff);
-      m_doubleSolenoidRight.Set(frc::DoubleSolenoid::Value::kOff);
-      //throw std::invalid_argument("Invalid ClimbDirection.\n");
+      m_doubleSolenoid.Set(frc::DoubleSolenoid::Value::kOff);
+      throw std::invalid_argument("Invalid ClimbDirection.\n");
       break;
   }
 }

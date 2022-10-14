@@ -29,5 +29,5 @@ class Climb
 
  private:
   climber* m_climber;
-  const climber::ClimbDirection&  m_direction;
+  const climber::ClimbDirection  m_direction;
 };

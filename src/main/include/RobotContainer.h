@@ -55,6 +55,8 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
 
+  void PosttoDashboard();
+
  private:
   // The robot's subsystems and commands are defined here...
   climber m_climber;

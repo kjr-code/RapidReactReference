@@ -14,13 +14,13 @@ void ShootHigh::Initialize() {
 
 void ShootHigh::Execute() {
 
+    
+    m_shooter->RunShooter(shooter::ShooterBehavior::kHigh);
+
     if (maxAimDeviationDEG < abs(m_shooter->GetError())) {
         m_drivetrain->Center(m_shooter->GetError());
-    } else if (m_shooter->Goldilocks()) {
-        m_shooter->RunShooter(shooter::ShooterBehavior::kHigh);
-        m_drivetrain->MecanumDrive(0,0,0);
     } else {
-        m_shooter->RunShooter(shooter::ShooterBehavior::kOff);
+        m_drivetrain->MecanumDrive(0,0,0);
     }
 
     //m_shooter->RunShooter(shooter::ShooterBehavior::kHigh);

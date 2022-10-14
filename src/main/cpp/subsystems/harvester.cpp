@@ -2,13 +2,13 @@
 
 harvester::harvester() {
   // Implementation of subsystem constructor goes here.
-  m_motorHarvester.ConfigFactoryDefault();
+  m_motorHarvester.SetInverted(true);
 }
 
 void harvester::RunHarvester(const HarvesterDirection& direction) {
   switch(direction) {
     case HarvesterDirection::kForward :
-      //MoveHarvester(PneumaticsDirection::kOut);
+      MoveHarvester(PneumaticsDirection::kOut);
       m_motorHarvester.Set(harvesterConstants::motorMaxOutput);
       break;
     case HarvesterDirection::kReverse :

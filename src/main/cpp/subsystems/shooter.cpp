@@ -17,17 +17,17 @@ shooter::shooter() {
 }
 
 void shooter::RunShooter(const ShooterBehavior& behavior) {
-  int speed = 0;
+  //int speed = 0;
   switch(behavior) {
     case ShooterBehavior::kHigh :
-      speed = frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase);
+      //speed = frc::SmartDashboard::GetNumber("ShootHighSpeed", highSpeedBase);
       //m_PIDShooter.SetReference(speed, 
                                 //rev::CANSparkMax::ControlType::kVelocity);
       //m_motorShooter.SetVoltage(units::volt_t(speed));
       ShootHigh();
       break;
     case ShooterBehavior::kLow :
-      speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
+      //speed = frc::SmartDashboard::GetNumber("ShootLowSpeed", lowSpeedBase);
       //m_motorShooter.SetVoltage(units::volt_t(speed));
       //m_PIDShooter.SetReference(speed, 
                                // rev::CANSparkMax::ControlType::kVelocity);

@@ -24,10 +24,8 @@ class climber : public frc2::SubsystemBase {
   void SimulationPeriodic() override;
 
  private:
-  frc::DoubleSolenoid m_doubleSolenoidLeft{climberConstants::PHID, frc::PneumaticsModuleType::REVPH,
-                                           climberConstants::solenoidForwardLeft, climberConstants::solenoidReverseLeft};
-  frc::DoubleSolenoid m_doubleSolenoidRight{climberConstants::PHID, frc::PneumaticsModuleType::REVPH,
-                                            climberConstants::solenoidForwardRight, climberConstants::solenoidReverseRight};
+  frc::DoubleSolenoid m_doubleSolenoid{climberConstants::PHID, frc::PneumaticsModuleType::REVPH,
+                                           climberConstants::solenoidForward, climberConstants::solenoidReverse};
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };

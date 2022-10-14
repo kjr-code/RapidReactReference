@@ -19,6 +19,7 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  m_container.PosttoDashboard();
 }
 
 /**
@@ -28,7 +29,8 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {}
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+}
 
 /**
  * This autonomous runs the autonomous command selected by your {@link

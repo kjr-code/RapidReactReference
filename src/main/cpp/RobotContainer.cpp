@@ -26,9 +26,9 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
     [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftY); },
     [this] { return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kRightX); }));
 
-  m_climber.SetDefaultCommand(Climb(
-    &m_climber, climber::ClimbDirection::kDown
-  ));
+  //m_climber.SetDefaultCommand(Climb(
+    //&m_climber, climber::ClimbDirection::kDown
+  //));
 
   //m_indexer.SetDefaultCommand(Index(
     //&m_indexer, indexer::IndexerDirection::kOff
@@ -39,17 +39,26 @@ RobotContainer::RobotContainer() : m_Autonomous(&m_climber,
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhenHeld(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kRightBumper).WhenHeld(
     Harvester(&m_harvester, harvester::HarvesterDirection::kForward)); 
 
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kB).WhenHeld(
     Harvester(&m_harvester, harvester::HarvesterDirection::kReverse));
 
-  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kX).WhenHeld(
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kA).WhenPressed(
+    frc2::InstantCommand([this]() { m_harvester.MoveHarvester(harvester::PneumaticsDirection::kIn); }, {}));
+
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kLeftBumper).WhenHeld(
     Index(&m_indexer, indexer::IndexerDirection::kForward));
   
   frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kY).WhenHeld(
     Index(&m_indexer, indexer::IndexerDirection::kReverse));
+
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kBack).WhenHeld(
+    Climb(&m_climber, climber::ClimbDirection::kUp));
+
+  frc2::JoystickButton(&m_controllerMain, frc::XboxController::Button::kStart).WhenHeld(
+    Climb(&m_climber, climber::ClimbDirection::kDown));                                                                                    
 
   frc2::Trigger leftTrigger ([&] {return m_controllerMain.GetRawAxis(frc::XboxController::Axis::kLeftTrigger) >= 0.75;});
   leftTrigger.WhileActiveContinous(ShootLow(&m_shooter));
@@ -59,7 +68,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
   m_chooser.SetDefaultOption("one ball auto", &m_BackupAndShoot);
   m_chooser.AddOption("two ball auto", &m_ForwardTurnShoot);
-  frc::SmartDashboard::PutData(&m_chooser);
 
 
   //bool shootHighCondition = TriggerPressed(true, true);
@@ -71,11 +79,16 @@ void RobotContainer::ConfigureButtonBindings() {
   //lowTrigger.WhileActiveContinous(ShootLow(&m_shooter));
 
 /*
-  if (m_controllerAux.GetLeftTriggerAxis() >= 0.75) {
+  if (controllerMain.GetLeftTriggerAxis() >= 0.75) {
     frc2::Trigger().WhileActiveContinous(ShootLow(&m_shooter));
   }
 */
 }
+
+void RobotContainer::PosttoDashboard() {
+  frc::SmartDashboard::PutData(&m_chooser);
+}
+
 /*
 bool RobotContainer::TriggerPressed(bool right, bool driveController) {
 
@@ -83,13 +96,13 @@ bool RobotContainer::TriggerPressed(bool right, bool driveController) {
     if (driveController) {
       return (m_controllerMain.GetRightTriggerAxis() >= 0.75);
     } else {
-      return (m_controllerAux.GetRightTriggerAxis() >= 0.75);
+      return (controllerMain.GetRightTriggerAxis() >= 0.75);
     }
   } else {
     if (driveController) {
       return (m_controllerMain.GetLeftTriggerAxis() >= 0.75);
     } else {
-      return (m_controllerAux.GetLeftTriggerAxis() >= 0.75);
+      return (controllerMain.GetLeftTriggerAxis() >= 0.75);
     }
   }
 

@@ -16,7 +16,7 @@ BackupAndShoot::BackupAndShoot(drivetrain* drivetrain, shooter* shooter, indexer
 
   AddCommands(
     frc2::ParallelDeadlineGroup(
-      frc2::WaitCommand(3_s),
+      frc2::WaitCommand(2.5_s),
       frc2::InstantCommand([this]() { m_drivetrain->MecanumDrive(0.2, 0, 0);}, {})
     ),
     frc2::ParallelDeadlineGroup(

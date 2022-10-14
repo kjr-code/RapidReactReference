@@ -85,7 +85,7 @@ class drivetrain : public frc2::SubsystemBase {
                                       frc::Pose2d(frc::Translation2d(0_m, 0_m),
                                                   frc::Rotation2d(0_deg))};
 
-  //frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
+  frc::MecanumDrive m_mecanumDrive{m_motorFrontLeft, m_motorRearLeft, m_motorFrontRight, m_motorRearRight};
 
   double m_adjXSpeed{0};
   double m_adjYSpeed{0};
